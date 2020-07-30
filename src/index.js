@@ -52,7 +52,7 @@ function login(userName, password) {
 }
 
 function loginAsManager() {
-  manager = 'manager'
+  manager = new Manager('manager', 'Manager')
   // new Manager
 }
 

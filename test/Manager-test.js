@@ -12,18 +12,23 @@ import sampleUserData from './sampleData/sampleUsers'
 // import Customer from '../src/Customer'
 // import TodayBookingRepo from '../src/TodayBooking-repo';
 // import UserBookingRepo from '../src/UserBooking-repo';
-// import User from '../src/User'
-// import Manager from '../src/Manager'
+import User from '../src/User'
+import Manager from '../src/Manager'
 
 //delete unused imports
 
-describe('thisTest', () => {
+describe('Manager', () => {
 
-  // before(() => {
-  //
-  // })
+  let manager;
+  before(() => {
+    manager = new Manager('manager', 'Manager');
+  });
 
-  it('should be a test', () => {
-    expect('test').to.eql('test');
-  })
+  it('should have a id that is manager', () => {
+    expect(manager.id).to.eql('manager');
+  });
+
+  it('should have a name that is Manager', () => {
+    expect(manager.name).to.eql('Manager');
+  });
 })
