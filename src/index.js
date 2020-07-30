@@ -13,23 +13,49 @@ import Manager from './Manager';
 // import loginUser from './loginUser'
 import deleteBooking from './DeleteBooking';
 import domUpdates from './DomUpdates';
+import fetchAllData from './FetchAllData';
 import fetchAllCustomerData from './FetchAllCustomerData';
+import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
 let user = new User()
-let customers = [];
+const allData = {
+  customers: [],
+  rooms: [],
+  bookings: []
+}
+let bookings = []
 let hasCustomerDataLoaded = false
+let hasBookingDataLoaded = false
 
-fetchAllCustomerData()
-  .then(data => {
-    customers = data
-    hasCustomerDataLoaded = true
+fetchAllData()
+  .then((data) => {
+    allData.customers = data.customerData;
+    allData.rooms = data.roomData;
+    allData.bookings = data.bookingData;
   })
-  .then(() => {customers = customers.map(customer => new Customer(customer))})
-  .then(() => {customers = new AllCustomers(customers)})
-  .then(() => {console.log(customers)})
+  .then(() => {console.log(allData)})
 
-window.addEventListener('click', clickHandler);
+// fetchAllCustomerData()
+//   .then(data => {
+//     customers = data
+//     hasCustomerDataLoaded = true
+//   })
+//   .then(() => {customers = customers.map(customer => new Customer(customer))})
+//   .then(() => {customers = new AllCustomers(customers)})
+//
+// fetchAllBookingData()
+//   .then(data => {
+//     bookings = data
+//     hasBookingDataLoaded = true
+//   })
+//   .then(() => console.log(bookings))
+  // .then(() => {bookings = bookings.map(booking => new Booking(booking))})
+  // .then(() => {bookings = new AllBookings(Bookings)})
+
+
+window.addEventListener('click', clickHandler)
+// window.addEventListener('click', clickHandler);
 
 
 
@@ -38,8 +64,6 @@ function clickHandler(event) {
   if (event.target.classList.contains('login-button')) {
     event.preventDefault();
     loginUser();
-    console.log(manager)
-    console.log(customer)
   }
 }
 
