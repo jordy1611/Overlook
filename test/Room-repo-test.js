@@ -8,7 +8,8 @@ import sampleUserData from './sampleData/sampleUsers'
 // import Repo from '..src/Repo'
 // import RoomRepo from '..src/Room-repo'
 // import Room from '..src/Room'
-// import UserRepo from '..src/User-repo'
+// import CustomerRepo from '..src/Customer-repo'
+// import Customer from '..src/Customer'
 // import TodayBookingRepo from '..src/TodayBooking-repo';
 // import UserBookingRepo from '..src/UserBooking-repo';
 // import User from '..src/User'

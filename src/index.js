@@ -1,12 +1,40 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
-// import './css/_mixins.scss';
-// import './css/_login-form.scss';
+import './css/style.scss';
+// import './images/person walking on path.jpg';
+// import './images/The Rock.jpg';
+import User from './User';
+import Customer from './Customer'
+import CustomerRepo from './Customer-repo';
+import Room from './Room';
+import RoomRepo from './Room-repo';
+import Booking from './Booking';
+import BookingRepo from './Booking-repo';
+import TodayBookingRepo from './TodayBooking-repo';
+import UserBookingRepo from './UserBooking-repo';
+import Manager from './Manager';
+import deleteBooking from './DeleteBooking';
+import domUpdates from './DomUpdates';
+import fetchAllData from './FetchAllData';
+import postNewBooking from './PostNewBooking';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-// import './images/turing-logo.png'
+window.addEventListener('click', clickHandler);
+window.addEventListener('load', console.log('LOAD!'));
 
-console.log('This is the JavaScript entry file - your code begins here.');
+function clickHandler(event) {
+  if (event.target.classList.contains('login-button')) {
+    event.preventDefault();
+    loginUser();
+  }
+}
+
+function loginUser() {
+  console.log('ayyyyyyy')
+}
+
+function validatePassword() {
+
+}
+
+function createCurrentUser() {
+
+}
