@@ -1,7 +1,7 @@
-@mixin formSizing($width, $height, $margin) {
+@mixin formSizing($width, $height, $marginLR, $marginTB) {
   width: $width;
   height: $height;
-  margin: $margin $margin $margin $margin;
+  margin: $marginTB $marginLR $marginTB $marginLR;
  }
 
 @mixin color() {
