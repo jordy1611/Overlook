@@ -8,7 +8,7 @@ import sampleUserData from './sampleData/sampleUsers'
 // import Repo from '../src/Repo'
 // import RoomRepo from '../src/Room-repo'
 // import Room from '../src/Room'
-import CustomerRepo from '../src/Customer-repo'
+import AllCustomers from '../src/AllCustomers'
 import Customer from '../src/Customer'
 // import TodayBookingRepo from '../src/TodayBooking-repo';
 // import UserBookingRepo from '../src/UserBooking-repo';
@@ -17,9 +17,9 @@ import Customer from '../src/Customer'
 
 //delete unused imports
 
-describe('CustomerRepo', () => {
+describe('AllCustomers', () => {
   let customer0, customer1, customer2, customer3, customer4, customers,
-  customerRepo;
+  allCustomers;
   before(() => {
     customer0 = new Customer(sampleUserData[0]);
     customer1 = new Customer(sampleUserData[1]);
@@ -27,11 +27,11 @@ describe('CustomerRepo', () => {
     customer3 = new Customer(sampleUserData[3]);
     customer4 = new Customer(sampleUserData[4]);
     customers = [customer0, customer1, customer2, customer3, customer4];
-    customerRepo = new CustomerRepo(customers)
+    allCustomers = new AllCustomers(customers)
   });
 
   it('should have an array of customer objects', () => {
-    expect(customerRepo.customers.length).to.eql(5);
-    expect(customerRepo.customers[0].name).to.eql('Leroy Jenkins');
+    expect(allCustomers.customers.length).to.eql(5);
+    expect(allCustomers.customers[0].name).to.eql('Leroy Jenkins');
   })
 })

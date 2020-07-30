@@ -4,7 +4,7 @@ import './css/style.scss';
 // import './images/The Rock.jpg';
 import User from './User';
 import Customer from './Customer'
-import CustomerRepo from './Customer-repo';
+import AllCustomers from './AllCustomers';
 import Room from './Room';
 import RoomRepo from './Room-repo';
 import Booking from './Booking';
@@ -27,20 +27,15 @@ fetchAllCustomerData()
     customers = data
     hasCustomerDataLoaded = true
   })
+  .then(() => {customers = customers.map(customer => new Customer(customer))})
+  .then(() => {customers = new AllCustomers(customers)})
   .then(() => {console.log(customers)})
+
 window.addEventListener('click', clickHandler);
 
-function onLoad() {
-  user = new User();
-// console.log(customers)
 
-  // .then(data => customers = data)
-  // .then(customers.push(customerData))
-  // console.log('index.js', customers)
-  // customers.forEach(customer => {
-  //   console.log(customer)
-  // })
-}
+
+
 function clickHandler(event) {
   if (event.target.classList.contains('login-button')) {
     event.preventDefault();
