@@ -9,26 +9,26 @@ import sampleUserData from './sampleData/sampleUsers'
 // import RoomRepo from '../src/Room-repo'
 // import Room from '../src/Room'
 // import CustomerRepo from '../src/Customer-repo'
-// import Customer from '../src/Customer'
+import Customer from '../src/Customer'
 // import TodayBookingRepo from '../src/TodayBooking-repo';
 // import UserBookingRepo from '../src/UserBooking-repo';
 import User from '../src/User'
-import Manager from '../src/Manager'
+
 
 //delete unused imports
 
-describe('Manager', () => {
+describe('Customer', () => {
 
-  let manager;
+  let customer1;
   before(() => {
-    manager = new Manager();
+    customer1 = new Customer(sampleUserData[0]);
   });
 
-  it('should have a id that is manager', () => {
-    expect(manager.id).to.eql('manager');
+  it('should have a id that is 1', () => {
+    expect(customer1.id).to.eql(1);
   });
 
-  it('should have a name that is Manager', () => {
-    expect(manager.name).to.eql('Manager');
+  it('should have a name that is Leroy', () => {
+    expect(customer1.name).to.eql('Leroy Jenkins');
   });
 })

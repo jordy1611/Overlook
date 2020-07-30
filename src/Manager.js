@@ -5,11 +5,10 @@ methods return todays revenue
 methods search user repo by user name, delete booking
 */
 class Manager extends User{
-  constructor(id, name) {
-    super(id, name);
-
+  constructor() {
+    super('manager', 'Manager');
   }
 }
 
 
-export default User
+export default Manager
