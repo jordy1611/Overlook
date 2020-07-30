@@ -5,3 +5,19 @@
 // body {
 //   background: $primary-background;
 // }
+@import 'mixins';
+@import 'login-form';
+
+* {
+  width: 100%;
+  margin: 0;
+  padding: 0
+}
+
+header {
+  background-color: red;
+}
+
+// .login-form {
+//   @include color()
+// }

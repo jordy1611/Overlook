@@ -1,0 +1,9 @@
+@mixin formSizing($width, $height, $margin) {
+  width: $width;
+  height: $height;
+  margin: $margin $margin $margin $margin;
+ }
+
+@mixin color() {
+  background-color: blue;
+}
