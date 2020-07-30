@@ -17,9 +17,10 @@ import domUpdates from './DomUpdates';
 import fetchAllData from './FetchAllData';
 import postNewBooking from './PostNewBooking';
 
+window.addEventListener('load', onLoad);
 window.addEventListener('click', clickHandler);
-window.addEventListener('load', console.log('LOAD!'));
 
+function onLoad() {}
 function clickHandler(event) {
   if (event.target.classList.contains('login-button')) {
     event.preventDefault();
