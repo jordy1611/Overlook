@@ -8,6 +8,7 @@
 @import 'mixins';
 @import 'login-form';
 
+
 * {
   width: 100%;
   margin: 0;
@@ -15,7 +16,23 @@
 }
 
 header {
-  background-color: red;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  background-color: grey;
+  border-bottom: solid .5em;
+  h1 {
+    font-size: 5em;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 3%;
+  }
+  h2{
+    font-size: 3em;
+    align-self: flex-end;
+    // margin-left: -50%;
+    margin-bottom: .7%;
+  }
 }
 
 // .login-form {
