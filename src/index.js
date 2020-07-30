@@ -15,15 +15,31 @@ import Manager from './Manager';
 // import loginUser from './loginUser'
 import deleteBooking from './DeleteBooking';
 import domUpdates from './DomUpdates';
-import fetchAllData from './FetchAllData';
+import fetchAllCustomerData from './FetchAllCustomerData';
 import postNewBooking from './PostNewBooking';
 
-let user, manager, customer;
-window.addEventListener('load', onLoad);
+let user = new User()
+let customers = [];
+let hasCustomerDataLoaded = false
+
+fetchAllCustomerData()
+  .then(data => {
+    customers = data
+    hasCustomerDataLoaded = true
+  })
+  .then(() => {console.log(customers)})
 window.addEventListener('click', clickHandler);
 
 function onLoad() {
   user = new User();
+// console.log(customers)
+
+  // .then(data => customers = data)
+  // .then(customers.push(customerData))
+  // console.log('index.js', customers)
+  // customers.forEach(customer => {
+  //   console.log(customer)
+  // })
 }
 function clickHandler(event) {
   if (event.target.classList.contains('login-button')) {
