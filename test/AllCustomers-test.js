@@ -34,4 +34,14 @@ describe('AllCustomers', () => {
     expect(allCustomers.customers.length).to.eql(5);
     expect(allCustomers.customers[0].name).to.eql('Leroy Jenkins');
   })
+
+  it('should return a specific customer based on id', () => {
+    expect(allCustomers.findCustomerById(1)).to.eql(customer0)
+    expect(allCustomers.findCustomerById(10)).to.eql(customer3)
+  })
+
+  it('should return a specific customer based on name', () => {
+    expect(allCustomers.findCustomerByName('Michael Jordan')).to.eql(customer4)
+    expect(allCustomers.findCustomerByName('Chip Skylark')).to.eql(customer1)
+  })
 })

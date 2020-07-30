@@ -1,2 +1,0 @@
-/*filtered booking repo based on current date or most recent date
-inherits booking methods*/

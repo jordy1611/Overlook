@@ -8,8 +8,12 @@ class AllCustomers {
     this.customers = customers
   }
 
-  findCustomerByName() {
-    
+  findCustomerById(id) {
+    return this.customers.find(customer => customer.id === id)
+  }
+
+  findCustomerByName(name) {
+    return this.customers.find(customer => customer.name === name)
   }
 }
 
