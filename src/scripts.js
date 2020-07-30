@@ -1,1 +1,15 @@
-//tetst
+import './css/base.scss';
+import './css/style.scss';
+// import './images/person walking on path.jpg';
+// import './images/The Rock.jpg';
+import User from './User';
+import UserRepo from './User-repo';
+import Room from './Room';
+import RoomRepo from './Room-repo';
+import Booking from './Booking';
+import BookingRepo from './Booking-repo';
+import Manager from './Manager';
+import deleteBooking from './DeleteBooking';
+import domUpdates from './DomUpdates';
+import fetchAllData from './FetchAllData';
+import postNewBooking from './PostNewBooking';
