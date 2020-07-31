@@ -163,7 +163,7 @@ function displayUserCosts(customerBookings) {
   let customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
   customerTotal = parseFloat(customerTotal.toFixed(2))
   document.querySelector('.customer-total').innerText = customerTotal;
-  document.querySelector('.customer-points').innerText = customerTotal * 100;
+  document.querySelector('.customer-points').innerText = Math.floor(customerTotal * 100);
 }
 
 function displayElement(className) {
