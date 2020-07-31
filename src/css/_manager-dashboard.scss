@@ -1,0 +1,15 @@
+.manager-dashboard{
+  @extend .user-dashboard;
+  .today-stats{
+    @extend .total-spent;
+  }
+  .search-customers{
+    @extend .book-room;
+    .search-customers-button{
+      @extend .book-room-button;
+    }
+  }
+  .bookings-today{
+    @extend .my-bookings;
+  }
+}
