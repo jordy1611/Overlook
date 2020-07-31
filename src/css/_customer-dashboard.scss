@@ -40,12 +40,38 @@
   }
 
   .my-bookings{
-    width: 80em;
+    display: flex;
+    flex-direction: column;
+    // align-content: center;
+    width: 78em;
     background-color:grey;
     border: solid .2em;
+    padding-bottom: .5em;
+    h3{
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      margin-top: .4em;
+    }
     .booking{
+      width: 55em;
+      height: 1.5em;
+      text-align: center;
+      align-self: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2em;
+      margin-top: .5em;
       background-color: white;
       border: solid .1em;
+      .booking-date,
+      .booking-room,
+      .booking-cost {
+        background-color: grey;
+        color: white;
+        padding: 0 .1em 0 .1em
+      }
     }
   }
 }
