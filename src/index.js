@@ -32,7 +32,7 @@ let todayDate = new Date()
 todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
 
 function onLoadTest() {
-  displayManagerPage()
+  console.log('good luck')
 }
 
 fetchAllData()
@@ -135,8 +135,8 @@ function displayManagerPage() {
 
 function displayTodayStats(bookingsToday) {
   const totalToday = currentUser.getBookingsCost(bookingsToday, hotelData.rooms)
-  document.querySelector('.revenue-today').innerText = totalToday;
-  document.querySelector('.rooms-booked').innerText = 20;
+  document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
+  document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelData.rooms.allRooms.length).toFixed(2);
 }
 
 function displayCustomerPage() {
@@ -160,10 +160,10 @@ function displayBookings(bookings, className) {
 }
 
 function displayUserCosts(customerBookings) {
-  const customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
+  let customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
+  customerTotal = parseFloat(customerTotal.toFixed(2))
   document.querySelector('.customer-total').innerText = customerTotal;
   document.querySelector('.customer-points').innerText = customerTotal * 100;
-
 }
 
 function displayElement(className) {
