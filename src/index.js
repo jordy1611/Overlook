@@ -19,7 +19,7 @@ import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
 let user = new User()
-const allData = {
+const hotelData = {
   customers: [],
   rooms: [],
   bookings: []
@@ -30,11 +30,21 @@ let hasBookingDataLoaded = false
 
 fetchAllData()
   .then((data) => {
-    allData.customers = data.customerData;
-    allData.rooms = data.roomData;
-    allData.bookings = data.bookingData;
+    hotelData.customers = data.customerData;
+    hotelData.rooms = data.roomData;
+    hotelData.bookings = data.bookingData;
   })
-  .then(() => {console.log(allData)})
+  .then(() => {
+    hotelData.customers = hotelData.customers.map(customer => new Customer(customer))
+    // hotelData.rooms = hotelData.rooms.map(room => new Room(room))
+    // hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))
+  })
+  .then(() => {
+    hotelData.customers = new AllCustomers(hotelData.customers)
+    // hotelData.rooms = new AllRooms(hotelData.rooms)
+    // hotelData.bookings = new AllBookings(hotelData.bookings)
+  })
+  .then(() => {console.log(hotelData)})
 
 // fetchAllCustomerData()
 //   .then(data => {
