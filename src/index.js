@@ -27,10 +27,9 @@ const hotelData = {
 }
 let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
+let mostRecentDate;
 
 function onLoadTest() {
-  currentUser = hotelData.customers.customers[7]
-  // console.log(hotelData.bookings.getBookingsByUser(currentUser.id))
 }
 
 fetchAllData()
@@ -48,7 +47,7 @@ fetchAllData()
     hotelData.rooms = new AllRooms(hotelData.rooms)
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
-    console.log(hotelData)
+    getMostRecentDate()
   })
   // .then(() => {onLoadTest()})
 
@@ -62,6 +61,17 @@ fetchAllData()
   // .then(() => {bookings = bookings.map(booking => new Booking(booking))})
   // .then(() => {bookings = new AllBookings(Bookings)})
 
+  function getMostRecentDate() {
+    let sortedBookings = hotelData.bookings.bookings.sort((a, b) => {
+      if(b.date > a.date ) {
+        return 1
+      } if (b.date < a.date) {
+        return -1
+      }
+      return 0
+    })
+    mostRecentDate = sortedBookings[0].date;
+  }
 
 window.addEventListener('click', clickHandler)
 // window.addEventListener('click', clickHandler);
@@ -105,10 +115,15 @@ function displayUserPage() {
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
     console.log('manager display')
+    displayManagerPage()
   } else if(currentUser instanceof Customer) {
     // console.log('customer display')
     displayCustomerPage()
   }
+}
+
+function displayManagerPage() {
+  // let bookingsToday = hotelData.bookings.getBookingsByDate()
 }
 
 function displayCustomerPage() {
