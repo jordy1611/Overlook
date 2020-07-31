@@ -73,7 +73,8 @@ function clickHandler(event) {
 function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
-  loginUser(userName, password);
+  loginUser(userName, password)
+  displayUserPage()
 }
 
 function loginUser(userName, password) {
@@ -81,7 +82,6 @@ function loginUser(userName, password) {
     loginAsManager()
   } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) {
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
-    console.log('userID', typeof parseInt(userName.slice(8)))
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
   }
@@ -89,15 +89,20 @@ function loginUser(userName, password) {
 
 function loginAsManager() {
   currentUser = new Manager()
-  console.log(currentUser)
-  // new Manager
 }
 
 function loginAsCustomer(id) {
   currentUser = new Customer(hotelData.customers.findCustomerById(id))
-  console.log(currentUser)
 }
 
+function displayUserPage() {
+  hideElement('login-form')
+  if (currentUser instanceof Manager) {
+    console.log('manager display')
+  } else if(currentUser instanceof Customer) {
+    console.log('customer display')
+  }
+}
 function displayElement(className) {
   document.querySelector(`.${className}`).classList.remove('hidden')
 }
