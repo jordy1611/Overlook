@@ -5,10 +5,10 @@ import './css/style.scss';
 import User from './User';
 import Customer from './Customer'
 import AllCustomers from './AllCustomers';
-import Room from './Room';
+// import Room from './Room';
 import AllRooms from './AllRooms';
 import Booking from './Booking';
-import BookingRepo from './Booking-repo';
+import AllBookings from './AllBookings';
 import Manager from './Manager';
 // import loginUser from './loginUser'
 import deleteBooking from './DeleteBooking';
@@ -36,7 +36,7 @@ fetchAllData()
   })
   .then(() => {
     hotelData.customers = hotelData.customers.map(customer => new Customer(customer))
-    // hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))
+    hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))
   })
   .then(() => {
     hotelData.customers = new AllCustomers(hotelData.customers)
