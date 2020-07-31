@@ -4,9 +4,9 @@ import letSampleBookingData from './sampleData/letSampleBookings'
 import sampleRoomData from './sampleData/sampleRooms'
 import sampleUserData from './sampleData/sampleUsers'
 
-// import BookingRepo from '../src/Booking-repo'
-// import Repo from '../src/Repo'
-// import RoomRepo from '../src/Room-repo'
+import AllBookings from '../src/AllBookings'
+import Booking from '../src/Booking'
+import AllRooms from '../src/AllRooms'
 // import Room from '../src/Room'
 // import CustomerRepo from '../src/Customer-repo'
 import Customer from '../src/Customer'
@@ -19,9 +19,11 @@ import User from '../src/User'
 
 describe('Customer', () => {
 
-  let customer1;
+  let customer1, allRooms, allBookings, bookings;
   before(() => {
     customer1 = new Customer(sampleUserData[0]);
+    allRooms = new AllRooms(sampleRoomData);
+    bookings = constSampleBookingData.map(booking => new Booking(booking));
   });
 
   it('should have a id that is 1', () => {
@@ -35,5 +37,9 @@ describe('Customer', () => {
   it('should return a customer\'s first name', () => {
     expect(customer1.getFirstName()).to.eql('Leroy');
     // expect(customer4.getFirstName()).to.eql('Bruce')
+  })
+
+  it('should return the total cost of all of a customer\'s bookings', () => {
+    expect(customer1.getBookingsCost(bookings, allRooms)).to.eql(8628.65)
   })
 })

@@ -102,6 +102,7 @@ function loginAsCustomer(id) {
 
 function displayUserPage() {
   hideElement('login-form')
+  document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
     console.log('manager display')
   } else if(currentUser instanceof Customer) {
@@ -111,39 +112,31 @@ function displayUserPage() {
 }
 
 function displayCustomerPage() {
-  // console.log('displayCustomerPage');
+  let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
   displayElement('user-dashboard');
-  displayCustomerBookings();
+  displayCustomerBookings(customerBookings);
+  displayUserCosts(customerBookings);
 }
 
-function displayCustomerBookings() {
-  // console.log('displayCustomerBookings')
-  // console.log('hotelData.bookings.bookings', hotelData.bookings.bookings);
-  // console.log('hotelData.bookings', hotelData.bookings);
-  let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
-  console.log(customerBookings)
+function displayCustomerBookings(customerBookings) {
   customerBookings.forEach(booking => {
     let singleBooking = `
-    <article class="booking">
-      <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
-      <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
-      <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
-    </article>
+      <article class="booking">
+        <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
+        <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
+        <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
+      </article>
     `
-    // console.log('cost', booking.getCost(hotelData.rooms.allRooms))
     document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
   });
-//       <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.bookings.bookings)}</span></p>
-
 }
 
-// function populateCustomerBookings() {
-//   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id);
-//   customerBookings = customerBookings.map(booking => {
-//     {date: booking.date, roomNumber: booking.roomNumber, cost: booking.getCost(hotel.bookings.bookings)}
-//   })
-//   return customerBookings
-// }
+function displayUserCosts(customerBookings) {
+  const customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
+  document.querySelector('.customer-total').innerText = customerTotal;
+  document.querySelector('.customer-points').innerText = customerTotal * 100;
+
+}
 
 function displayElement(className) {
   document.querySelector(`.${className}`).classList.remove('hidden')

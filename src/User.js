@@ -13,6 +13,14 @@ class User {
     return this.name.split(' ')[0]
     // console.log(name[0])
   }
+
+  getBookingsCost(bookings, rooms) {
+    let bookingsCost = 0;
+    bookings.forEach(booking => {
+      bookingsCost += booking.getCost(rooms.allRooms)
+    })
+    return bookingsCost;
+  }
   // get total cost of booking Array
 
 }
