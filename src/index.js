@@ -18,14 +18,14 @@ import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
-let user = new User()
+
+let currentUser = new User()
 const hotelData = {
   customers: [],
   rooms: [],
   bookings: []
 }
-let bookings = []
-let hasCustomerDataLoaded = false
+let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
 
 fetchAllData()
@@ -43,17 +43,11 @@ fetchAllData()
     hotelData.customers = new AllCustomers(hotelData.customers)
     // hotelData.rooms = new AllRooms(hotelData.rooms)
     // hotelData.bookings = new AllBookings(hotelData.bookings)
+    hasAllDataLoaded = true;
   })
   .then(() => {console.log(hotelData)})
 
-// fetchAllCustomerData()
-//   .then(data => {
-//     customers = data
-//     hasCustomerDataLoaded = true
-//   })
-//   .then(() => {customers = customers.map(customer => new Customer(customer))})
-//   .then(() => {customers = new AllCustomers(customers)})
-//
+
 // fetchAllBookingData()
 //   .then(data => {
 //     bookings = data
@@ -69,37 +63,45 @@ window.addEventListener('click', clickHandler)
 
 
 
-
 function clickHandler(event) {
-  if (event.target.classList.contains('login-button')) {
+  if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
     event.preventDefault();
-    loginUser();
+    login();
   }
 }
 
-function loginUser() {
+function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
-  console.log(password)
-  login(userName, password);
+  loginUser(userName, password);
 }
 
-function login(userName, password) {
-  if (userName === 'manager' && password === 'overlook2020') {
+function loginUser(userName, password) {
+  if (userName === 'manager') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && password === 'overlook2020') {
-    loginAsCustomer()
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) {
+    loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
+    console.log('userID', typeof parseInt(userName.slice(8)))
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
   }
 }
 
 function loginAsManager() {
-  manager = new Manager('manager', 'Manager')
+  currentUser = new Manager()
+  console.log(currentUser)
   // new Manager
 }
 
-function loginAsCustomer() {
-  customer = 'customer'
-  // new Customer
+function loginAsCustomer(id) {
+  currentUser = new Customer(hotelData.customers.findCustomerById(id))
+  console.log(currentUser)
+}
+
+function displayElement(className) {
+  document.querySelector(`.${className}`).classList.remove('hidden')
+}
+
+function hideElement(className) {
+  document.querySelector(`.${className}`).classList.add('hidden')
 }
