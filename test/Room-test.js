@@ -7,7 +7,7 @@ import sampleUserData from './sampleData/sampleUsers'
 // import BookingRepo from '../src/Booking-repo'
 // import Repo from '../src/Repo'
 // import RoomRepo from '../src/Room-repo'
-// import Room from '../src/Room'
+import Room from '../src/Room'
 // import CustomerRepo from '../src/Customer-repo'
 // import Customer from '../src/Customer'
 // import TodayBookingRepo from '../src/TodayBooking-repo';
@@ -17,7 +17,7 @@ import sampleUserData from './sampleData/sampleUsers'
 
 //delete unused imports
 
-describe('thisTest', () => {
+describe('Do We Even Need A Room Class?', () => {
 
   // before(() => {
   //

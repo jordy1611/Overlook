@@ -6,7 +6,7 @@ import User from './User';
 import Customer from './Customer'
 import AllCustomers from './AllCustomers';
 import Room from './Room';
-import RoomRepo from './Room-repo';
+import AllRooms from './AllRooms';
 import Booking from './Booking';
 import BookingRepo from './Booking-repo';
 import Manager from './Manager';

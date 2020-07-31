@@ -8,6 +8,13 @@ class Customer extends User{
   constructor({id, name}) {
     super(id, name);
   }
+
+  //get firstName
+
+  // get cost of all bookings can be user method
+
+  // book
+
 }
 
 
