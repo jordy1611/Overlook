@@ -1,9 +1,17 @@
-@mixin formSizing($width, $height, $marginLR, $marginTB) {
+@mixin loginSizing($width, $height, $marginLR, $marginTB) {
   width: $width;
   height: $height;
   margin: $marginTB $marginLR $marginTB $marginLR;
  }
 
-@mixin color() {
-  background-color: blue;
+@mixin userCards() {
+    font-size: 2.3em;
+    font-weight: bold;
+    margin-bottom: 3em;
+    width: 13em;
+    height: 7em;
+    background-color:grey;
+    border: solid .1em;
+    border-radius: .75em 3em;
+    padding: 1em;
 }

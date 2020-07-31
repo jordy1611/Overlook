@@ -8,6 +8,9 @@ class User {
     this.id = id
     this.name = name
   }
+
+  // get total cost of booking Array
+  
 }
 
 

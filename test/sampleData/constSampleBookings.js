@@ -25,7 +25,8 @@ const constSampleBookingData = [
   {"id":"5fwrgu4i7k55hl6tr","userID":19,"date":"2020/01/24","roomNumber":4,"roomServiceCharges":[]},
   {"id":"5fwrgu4i7k55hl6ts","userID":200,"date":"2020/01/26","roomNumber":7,"roomServiceCharges":[]},
   {"id":"5fwrgu4i7k55hl6tt","userID":3,"date":"2020/11/16","roomNumber":5,"roomServiceCharges":[]},
-  {"id":"5fwrgu4i7k55hl6tu","userID":3,"date":"2021/01/28","roomNumber":6,"roomServiceCharges":[]}
+  {"id":"5fwrgu4i7k55hl6tu","userID":2,"date":"2020/11/16","roomNumber":9,"roomServiceCharges":[]},
+  {"id":"5fwrgu4i7k55hl6tv","userID":3,"date":"2021/01/28","roomNumber":6,"roomServiceCharges":[]}
 ]
 
 
