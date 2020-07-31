@@ -31,4 +31,9 @@ describe('Customer', () => {
   it('should have a name that is Leroy', () => {
     expect(customer1.name).to.eql('Leroy Jenkins');
   });
+
+  it('should return a customer\'s first name', () => {
+    expect(customer1.getFirstName()).to.eql('Leroy');
+    expect(customer4.getFirstName()).to.eql('Bruce')
+  })
 })

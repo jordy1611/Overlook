@@ -9,8 +9,12 @@ class User {
     this.name = name
   }
 
+  getFirstName() {
+    return this.name.split(' ')[0]
+    // console.log(name[0])
+  }
   // get total cost of booking Array
-  
+
 }
 
 
