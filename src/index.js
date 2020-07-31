@@ -28,8 +28,11 @@ const hotelData = {
 let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
 let mostRecentDate;
+let todayDate = new Date()
+todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
 
 function onLoadTest() {
+  displayManagerPage()
 }
 
 fetchAllData()
@@ -48,6 +51,7 @@ fetchAllData()
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
     getMostRecentDate()
+    onLoadTest()
   })
   // .then(() => {onLoadTest()})
 
@@ -114,7 +118,7 @@ function displayUserPage() {
   hideElement('login-form')
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
-    console.log('manager display')
+    // console.log('manager display')
     displayManagerPage()
   } else if(currentUser instanceof Customer) {
     // console.log('customer display')
@@ -123,18 +127,27 @@ function displayUserPage() {
 }
 
 function displayManagerPage() {
-  // let bookingsToday = hotelData.bookings.getBookingsByDate()
+  let bookingsToday = hotelData.bookings.getBookingsByDate(mostRecentDate)
+  displayElement('manager-dashboard')
+  displayBookings(bookingsToday, 'bookings-today')
+  displayTodayStats(bookingsToday)
+}
+
+function displayTodayStats(bookingsToday) {
+  const totalToday = currentUser.getBookingsCost(bookingsToday, hotelData.rooms)
+  document.querySelector('.revenue-today').innerText = totalToday;
+  document.querySelector('.rooms-booked').innerText = 20;
 }
 
 function displayCustomerPage() {
   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
   displayElement('user-dashboard');
-  displayCustomerBookings(customerBookings);
+  displayBookings(customerBookings, 'my-bookings');
   displayUserCosts(customerBookings);
 }
 
-function displayCustomerBookings(customerBookings) {
-  customerBookings.forEach(booking => {
+function displayBookings(bookings, className) {
+  bookings.forEach(booking => {
     let singleBooking = `
       <article class="booking">
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
@@ -142,7 +155,7 @@ function displayCustomerBookings(customerBookings) {
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
       </article>
     `
-    document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
+    document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
   });
 }
 
