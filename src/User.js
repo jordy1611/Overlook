@@ -11,7 +11,6 @@ class User {
 
   getFirstName() {
     return this.name.split(' ')[0]
-    // console.log(name[0])
   }
 
   getBookingsCost(bookings, rooms) {
