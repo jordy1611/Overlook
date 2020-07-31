@@ -1,0 +1,43 @@
+.login-form {
+  background-color: grey;
+  @include formSizing(60%, 30em, 20%, 10%)
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  text-align: left;
+  border: 1em solid;
+  border-radius: 5em 10em;
+  h3{
+    text-align: center;
+    font-size: 2em;
+    margin-top: .5em;
+    padding-bottom: 1em;
+    border-bottom: .2em solid;
+    width: 100%;
+    font-weight: bold;
+  }
+  p {
+    font-size: 1.75em;
+    margin-left: 30%;
+    margin-top: -1em;
+    max-width: 10em;
+    font-weight: bold;
+  }
+  input{
+    font-size: 1.9em;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: -1.5em;
+    border: .1em solid
+  }
+  button{
+    max-width: 10em;
+    font-size: 1.4em;
+    align-self: center;
+    height: 2em;
+    // margin-left: 30%;
+    margin-top: -1em;
+    border: .1em solid
+  }
+}

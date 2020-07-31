@@ -4,11 +4,11 @@ porperty isManager = true (for if statements?)
 methods return todays revenue
 methods search user repo by user name, delete booking
 */
-class Manager extends User{
-  constructor() {
-    super('manager', 'Manager');
+class Customer extends User{
+  constructor({id, name}) {
+    super(id, name);
   }
 }
 
 
-export default Manager
+export default Customer
