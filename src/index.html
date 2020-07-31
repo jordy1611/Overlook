@@ -9,7 +9,7 @@
       <h1 tabindex=0 class="header-text">Overlook Hotel</h1>
       <h2 tabindex=0 class="header-prompt">Welcome!  Please Login</h2>
     </header>
-    <form tabindex=0 class="login-form">
+    <form tabindex=0 class="login-form hidden">
       <h3>Login</h3>
       <p>UserName</p>
       <input class="username-input"></input>
@@ -17,6 +17,29 @@
       <input class="password-input" type="password"></input>
       <button class="login-button" aria-label="Log in as user button" alt="Log in as user button">Login</button>
     </form>
+    <section tabindex=0 class="user-dashboard">
+      <p class="total-spent">You Have Spent $$$$,</br>You Have $$$$$$ Points Now</p>
+      <section class="book-room">
+        <button class="book-room-button">Book A Room!</button>
+      </section>
+      <section class="my-bookings">
+        <article class="booking">
+          <p tabindex=0><span class="booking-date">2020/11/16</span></p>
+          <p tabindex=0><span class="booking-room">14</span></p>
+          <p tabindex=0><span class="booking-cost">$1000</span></p>
+        </article>
+        <article class="booking">
+          <p tabindex=0><span class="booking-date">2020/11/16</span></p>
+          <p tabindex=0><span class="booking-room">14</span></p>
+          <p tabindex=0><span class="booking-cost">$1000</span></p>
+        </article>
+        <article class="booking">
+          <p tabindex=0><span class="booking-date">2020/11/16</span></p>
+          <p tabindex=0><span class="booking-room">14</span></p>
+          <p tabindex=0><span class="booking-cost">$1000</span></p>
+        </article>
+      </section>
+    </section>
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
