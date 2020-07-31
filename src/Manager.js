@@ -6,7 +6,7 @@ methods search user repo by user name, delete booking
 */
 class Manager extends User{
   constructor() {
-    super('manager', 'Manager');
+    super('manager', 'Manager Manager');
   }
 }
 

@@ -29,6 +29,6 @@ describe('Manager', () => {
   });
 
   it('should have a name that is Manager', () => {
-    expect(manager.name).to.eql('Manager');
+    expect(manager.name).to.eql('Manager Manager');
   });
 })
