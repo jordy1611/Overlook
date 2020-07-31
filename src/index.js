@@ -36,16 +36,17 @@ fetchAllData()
   })
   .then(() => {
     hotelData.customers = hotelData.customers.map(customer => new Customer(customer))
-    // hotelData.rooms = hotelData.rooms.map(room => new Room(room))
     // hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))
   })
   .then(() => {
     hotelData.customers = new AllCustomers(hotelData.customers)
-    // hotelData.rooms = new AllRooms(hotelData.rooms)
+    // console.log('before', hotelData.rooms)
+    hotelData.rooms = new AllRooms(hotelData.rooms)
+    // console.log('after', hotelData.rooms)
     // hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
   })
-  .then(() => {console.log(hotelData)})
+  // .then(() => {console.log(hotelData)})
 
 
 // fetchAllBookingData()
