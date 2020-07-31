@@ -1,3 +1,4 @@
+
 /*Individual bookings
 properties, id(wtf), userID, date, room number, roomservicecharges*/
 class Booking {
@@ -7,6 +8,10 @@ class Booking {
     this.date = date;
     this.roomNumber = roomNumber;
     this.roomServiceCharges = roomServiceCharges;
+  }
+
+  getCost(hotelRooms) {
+    return hotelRooms.find(room => room.number === this.roomNumber).costPerNight
   }
 }
 

@@ -6,7 +6,7 @@ import sampleUserData from './sampleData/sampleUsers'
 
 // import BookingRepo from '../src/Booking-repo'
 import Booking from '../src/Booking'
-// import RoomRepo from '../src/Room-repo'
+import AllRooms from '../src/AllRooms'
 // import Room from '../src/Room'
 // import CustomerRepo from '../src/Customer-repo'
 // import Customer from '../src/Customer'
@@ -17,9 +17,10 @@ import Booking from '../src/Booking'
 //delete unused imports
 
 describe('Booking', () => {
-  let booking;
+  let booking, hotel;
   before(() => {
     booking = new Booking(constSampleBookingData[0])
+    hotel = new AllRooms(sampleRoomData)
   })
 
   it('should take in a unique id, user ID, date, room number, and an empty array of room service charges', () => {
@@ -28,5 +29,9 @@ describe('Booking', () => {
     expect(booking.date).to.eql('2020/07/22');
     expect(booking.roomNumber).to.eql(15);
     expect(booking.roomServiceCharges).to.eql([]);
+  })
+
+  it('should return it\'s own cost', () => {
+    expect(booking.getCost(sampleRoomData)).to.eql(294.56)
   })
 })
