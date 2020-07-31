@@ -28,6 +28,11 @@ const hotelData = {
 let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
 
+function onLoadTest() {
+  currentUser = hotelData.customers.customers[7]
+  // console.log(hotelData.bookings.getBookingsByUser(currentUser.id))
+}
+
 fetchAllData()
   .then((data) => {
     hotelData.customers = data.customerData;
@@ -40,13 +45,12 @@ fetchAllData()
   })
   .then(() => {
     hotelData.customers = new AllCustomers(hotelData.customers)
-    // console.log('before', hotelData.rooms)
     hotelData.rooms = new AllRooms(hotelData.rooms)
-    // console.log('after', hotelData.rooms)
-    // hotelData.bookings = new AllBookings(hotelData.bookings)
+    hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
+    console.log(hotelData)
   })
-  // .then(() => {console.log(hotelData)})
+  // .then(() => {onLoadTest()})
 
 
 // fetchAllBookingData()
@@ -101,9 +105,46 @@ function displayUserPage() {
   if (currentUser instanceof Manager) {
     console.log('manager display')
   } else if(currentUser instanceof Customer) {
-    console.log('customer display')
+    // console.log('customer display')
+    displayCustomerPage()
   }
 }
+
+function displayCustomerPage() {
+  // console.log('displayCustomerPage');
+  displayElement('user-dashboard');
+  displayCustomerBookings();
+}
+
+function displayCustomerBookings() {
+  // console.log('displayCustomerBookings')
+  // console.log('hotelData.bookings.bookings', hotelData.bookings.bookings);
+  // console.log('hotelData.bookings', hotelData.bookings);
+  let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
+  console.log(customerBookings)
+  customerBookings.forEach(booking => {
+    let singleBooking = `
+    <article class="booking">
+      <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
+      <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
+      <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
+    </article>
+    `
+    // console.log('cost', booking.getCost(hotelData.rooms.allRooms))
+    document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
+  });
+//       <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.bookings.bookings)}</span></p>
+
+}
+
+// function populateCustomerBookings() {
+//   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id);
+//   customerBookings = customerBookings.map(booking => {
+//     {date: booking.date, roomNumber: booking.roomNumber, cost: booking.getCost(hotel.bookings.bookings)}
+//   })
+//   return customerBookings
+// }
+
 function displayElement(className) {
   document.querySelector(`.${className}`).classList.remove('hidden')
 }
