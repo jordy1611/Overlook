@@ -1,6 +1,6 @@
 .login-form {
   background-color: grey;
-  @include formSizing(60%, 30em, 20%, 10%)
+  @include loginSizing(60%, 30em, 20%, 10%)
   display: flex;
   flex-direction: column;
   justify-content: space-around;

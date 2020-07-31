@@ -1,0 +1,51 @@
+.user-dashboard{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 3%;
+  // padding: 2% 3% 0 3%;
+
+  .total-spent{
+    @include userCards()
+    text-align: center;
+    line-height: 1.1em;
+    // padding-top: 2em;
+    span{
+      margin-top: 4em;
+    }
+  }
+
+  .book-room{
+    @include userCards()
+    display: flex;
+    flex-direction: column;
+    p{
+      text-align: center;
+      margin-top: 1em;
+      margin-bottom: 3em;
+      height: 1em;
+    }
+    .book-room-button{
+      font-size: 1em;
+      font-weight: bold;
+      line-height: 1em;
+      align-self: center;
+      // justify-self: center;
+      height: 4em;
+      width: 10em;
+      border-radius: .3em;
+      // margin-top: 2em;
+    }
+  }
+
+  .my-bookings{
+    width: 80em;
+    background-color:grey;
+    border: solid .2em;
+    .booking{
+      background-color: white;
+      border: solid .1em;
+    }
+  }
+}
