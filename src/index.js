@@ -97,6 +97,8 @@ function clickHandler(event) {
   } else if(event.target.classList.contains('search-room-button')) {
     console.log('customer search rooms')
     searchRoomsByDate()
+  } else if(event.target.closest('.room-filter-buttons')) {
+    searchRoomsByType(event)
   }
 }
 
@@ -249,13 +251,16 @@ function displayRooms(rooms) {
 
 }
 
-// bookings.forEach(booking => {
-//   let singleBooking = `
-//     <article class="booking">
-//       <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
-//       <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
-//       <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
-//     </article>
-//   `
-//   document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
-// });
+function searchRoomsByType() {
+  if (event.target.classList.contains('all-rooms-button')) {
+    console.log('1')
+  } else if(event.target.classList.contains('residential-suite-button')) {
+    console.log('2')
+  } else if(event.target.classList.contains('junior-suite-button')) {
+    console.log('3')
+  } else if(event.target.classList.contains('suite-button')) {
+    console.log('4')
+  } else if(event.target.classList.contains('single-room-button')) {
+    console.log('5')
+  }
+}
