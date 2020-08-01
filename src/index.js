@@ -27,10 +27,12 @@ const hotelData = {
 }
 let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
+let mostRecentDate;
+let todayDate = new Date()
+todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
 
 function onLoadTest() {
-  currentUser = hotelData.customers.customers[7]
-  // console.log(hotelData.bookings.getBookingsByUser(currentUser.id))
+  console.log('good luck')
 }
 
 fetchAllData()
@@ -48,7 +50,8 @@ fetchAllData()
     hotelData.rooms = new AllRooms(hotelData.rooms)
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
-    console.log(hotelData)
+    getMostRecentDate()
+    onLoadTest()
   })
   // .then(() => {onLoadTest()})
 
@@ -62,6 +65,17 @@ fetchAllData()
   // .then(() => {bookings = bookings.map(booking => new Booking(booking))})
   // .then(() => {bookings = new AllBookings(Bookings)})
 
+  function getMostRecentDate() {
+    let sortedBookings = hotelData.bookings.bookings.sort((a, b) => {
+      if(b.date > a.date ) {
+        return 1
+      } if (b.date < a.date) {
+        return -1
+      }
+      return 0
+    })
+    mostRecentDate = sortedBookings[0].date;
+  }
 
 window.addEventListener('click', clickHandler)
 // window.addEventListener('click', clickHandler);
@@ -104,22 +118,36 @@ function displayUserPage() {
   hideElement('login-form')
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
-    console.log('manager display')
+    // console.log('manager display')
+    displayManagerPage()
   } else if(currentUser instanceof Customer) {
     // console.log('customer display')
     displayCustomerPage()
   }
 }
 
+function displayManagerPage() {
+  let bookingsToday = hotelData.bookings.getBookingsByDate(mostRecentDate)
+  displayElement('manager-dashboard')
+  displayBookings(bookingsToday, 'bookings-today')
+  displayTodayStats(bookingsToday)
+}
+
+function displayTodayStats(bookingsToday) {
+  const totalToday = currentUser.getBookingsCost(bookingsToday, hotelData.rooms)
+  document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
+  document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelData.rooms.allRooms.length).toFixed(2);
+}
+
 function displayCustomerPage() {
   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
   displayElement('user-dashboard');
-  displayCustomerBookings(customerBookings);
+  displayBookings(customerBookings, 'my-bookings');
   displayUserCosts(customerBookings);
 }
 
-function displayCustomerBookings(customerBookings) {
-  customerBookings.forEach(booking => {
+function displayBookings(bookings, className) {
+  bookings.forEach(booking => {
     let singleBooking = `
       <article class="booking">
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
@@ -127,15 +155,15 @@ function displayCustomerBookings(customerBookings) {
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
       </article>
     `
-    document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
+    document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
   });
 }
 
 function displayUserCosts(customerBookings) {
-  const customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
+  let customerTotal = currentUser.getBookingsCost(customerBookings, hotelData.rooms)
+  customerTotal = parseFloat(customerTotal.toFixed(2))
   document.querySelector('.customer-total').innerText = customerTotal;
-  document.querySelector('.customer-points').innerText = customerTotal * 100;
-
+  document.querySelector('.customer-points').innerText = Math.floor(customerTotal * 100);
 }
 
 function displayElement(className) {
