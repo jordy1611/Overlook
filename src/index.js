@@ -96,7 +96,7 @@ function clickHandler(event) {
     hideCustomerSearchPage();
   } else if(event.target.classList.contains('search-room-button')) {
     console.log('customer search rooms')
-    searchRoomsByDate()
+    filterRoomsByDate()
   } else if(event.target.closest('.room-filter-buttons')) {
     searchRoomsByType(event)
   }
@@ -202,12 +202,14 @@ function hideCustomerSearchPage() {
 }
 
 
-function searchRoomsByDate() {
+function filterRoomsByDate() { // not good srp
   let searchDate = document.querySelector('.room-search-date').value
+  let allRoomsAvailable
   if(searchDate.length === 10) {
     searchDate = searchDate.replace(/-/g, '/')
-    let roomsAvailable = getAvailableRooms(searchDate) //just pass in function on line 207
-    displaySearchDom(roomsAvailable)
+    allRoomsAvailable = getAvailableRooms(searchDate) //just pass in function on line 207
+    displaySearchDom(allRoomsAvailable)
+    return allRoomsAvailable
   }
 }
 
@@ -221,7 +223,6 @@ function getAvailableRooms(date) {
     })
   })
   return availableRooms
-  console.log('available rooms', availableRooms);
 }
 
 function displaySearchDom(rooms) {
@@ -253,14 +254,25 @@ function displayRooms(rooms) {
 
 function searchRoomsByType() {
   if (event.target.classList.contains('all-rooms-button')) {
+    filterRoomsByDate()
     console.log('1')
   } else if(event.target.classList.contains('residential-suite-button')) {
+    filterRoomsByType('residential suite')
     console.log('2')
   } else if(event.target.classList.contains('junior-suite-button')) {
+    filterRoomsByType('junior suite')
     console.log('3')
   } else if(event.target.classList.contains('suite-button')) {
+    filterRoomsByType('suite')
     console.log('4')
   } else if(event.target.classList.contains('single-room-button')) {
+    filterRoomsByType('single room')
     console.log('5')
   }
+}
+
+function filterRoomsByType(roomType) {
+  const allRooms = filterRoomsByDate()
+  const filteredRooms = allRooms.filter(room => room.roomType === roomType)
+  displayRooms(filteredRooms)
 }
