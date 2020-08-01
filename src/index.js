@@ -110,7 +110,7 @@ function login() {
 function loginUser(userName, password) {
   if (userName === 'manager') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
@@ -192,6 +192,7 @@ function displayBookRoomPage() {
   hideElement('customer-dashboard')
   displayElement('customer-search-dashboard')
 }
+
 function hideCustomerSearchPage() {
   hideElement('room-filter-buttons')
   hideElement('available-rooms')
@@ -203,15 +204,12 @@ function searchRoomsByDate() {
   let searchDate = document.querySelector('.room-search-date').value
   if(searchDate.length === 10) {
     searchDate = searchDate.replace(/-/g, '/')
-    let roomsAvailable = getAvailableRooms(searchDate)
-    displaySearchDom()
+    let roomsAvailable = getAvailableRooms(searchDate) //just pass in function on line 207
+    displaySearchDom(roomsAvailable)
   }
 }
 
-function displaySearchDom() {
-  displayElement('room-filter-buttons')
-  displayElement('available-rooms')
-}
+
 function getAvailableRooms(date) {
   let dayBookings = bookingsByDate(date)
   let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
@@ -223,3 +221,41 @@ function getAvailableRooms(date) {
   return availableRooms
   console.log('available rooms', availableRooms);
 }
+
+function displaySearchDom(rooms) {
+  displayElement('room-filter-buttons')
+  displayElement('available-rooms')
+  displayRooms(rooms)
+}
+
+function displayRooms(rooms) {
+  const availableRooms = document.querySelector('.available-rooms')
+  availableRooms.innerHTML = '<h3>Available Rooms</h3>'
+  rooms.forEach(room => {
+    const bidet = room.bidet ? 'Bidet' : 'No Bidet'
+    const singleRoom = `
+    <article class="room">
+      <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+      <p class="room-type">${room.roomType}</p>
+      <p class="bed-size">bed size: ${room.bedSize}</p>
+      <p class="num-beds">beds: ${room.numBeds}</p>
+      <p class="bidet">${bidet}</p>
+      <p class="room-number">room# ${room.number}</p>
+      <p class="cost">$${room.costPerNight}</p>
+    </article>
+    `
+    availableRooms.insertAdjacentHTML('beforeEnd', singleRoom)
+  })
+
+}
+
+// bookings.forEach(booking => {
+//   let singleBooking = `
+//     <article class="booking">
+//       <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
+//       <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
+//       <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
+//     </article>
+//   `
+//   document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
+// });
