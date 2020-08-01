@@ -1,5 +1,5 @@
 .manager-dashboard{
-  @extend .user-dashboard;
+  @extend .customer-dashboard;
   .today-stats{
     @extend .total-spent;
   }

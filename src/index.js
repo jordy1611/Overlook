@@ -33,6 +33,7 @@ todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.g
 
 function onLoadTest() {
   console.log('good luck')
+  displayBookRoomPage()
 }
 
 fetchAllData()
@@ -141,7 +142,7 @@ function displayTodayStats(bookingsToday) {
 
 function displayCustomerPage() {
   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
-  displayElement('user-dashboard');
+  displayElement('customer-dashboard');
   displayBookings(customerBookings, 'my-bookings');
   displayUserCosts(customerBookings);
 }
@@ -172,4 +173,10 @@ function displayElement(className) {
 
 function hideElement(className) {
   document.querySelector(`.${className}`).classList.add('hidden')
+}
+
+function displayBookRoomPage() {
+  hideElement('login-form')
+  displayElement('customer-search-dashboard')
+
 }

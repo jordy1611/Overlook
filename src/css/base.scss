@@ -9,6 +9,7 @@
 @import 'login-form';
 @import 'customer-dashboard';
 @import 'manager-dashboard';
+@import 'customer-search-dashboard';
 
 
 * {
@@ -35,7 +36,12 @@ header {
     margin-bottom: .7%;
   }
 }
-
+h3{
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: .4em;
+}
 .hidden{
   display: none;
 }
