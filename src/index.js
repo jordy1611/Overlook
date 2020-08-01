@@ -31,10 +31,10 @@ let mostRecentDate;
 let todayDate = new Date()
 todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
 
-function onLoadTest() {
-  console.log('good luck')
-  displayBookRoomPage()
-}
+// function onLoadTest() {
+//   console.log('good luck')
+//   displayBookRoomPage()
+// }
 
 fetchAllData()
   .then((data) => {
@@ -52,7 +52,7 @@ fetchAllData()
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
     getMostRecentDate()
-    onLoadTest()
+    // onLoadTest()
   })
   // .then(() => {onLoadTest()})
 
@@ -87,6 +87,16 @@ function clickHandler(event) {
   if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
     event.preventDefault();
     login();
+  } else if(event.target.classList.contains('book-room-button')) {
+    console.log('book a room')
+    displayBookRoomPage();
+  } else if(event.target.classList.contains('return-customer-page-button')) {
+      console.log('return to customer page')
+    displayCustomerPage();
+    hideCustomerSearchPage();
+  } else if(event.target.classList.contains('search-room-button')) {
+    console.log('customer search rooms')
+    searchRoomsByDate()
   }
 }
 
@@ -94,13 +104,13 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   loginUser(userName, password)
-  displayUserPage()
+  displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
 }
 
 function loginUser(userName, password) {
   if (userName === 'manager') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) {
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
@@ -128,12 +138,15 @@ function displayUserPage() {
 }
 
 function displayManagerPage() {
-  let bookingsToday = hotelData.bookings.getBookingsByDate(mostRecentDate)
+  let bookingsToday = bookingsByDate(mostRecentDate)
   displayElement('manager-dashboard')
   displayBookings(bookingsToday, 'bookings-today')
   displayTodayStats(bookingsToday)
 }
 
+function bookingsByDate(date) {
+  return hotelData.bookings.getBookingsByDate(date)
+}
 function displayTodayStats(bookingsToday) {
   const totalToday = currentUser.getBookingsCost(bookingsToday, hotelData.rooms)
   document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
@@ -176,7 +189,37 @@ function hideElement(className) {
 }
 
 function displayBookRoomPage() {
-  hideElement('login-form')
+  hideElement('customer-dashboard')
   displayElement('customer-search-dashboard')
+}
+function hideCustomerSearchPage() {
+  hideElement('room-filter-buttons')
+  hideElement('available-rooms')
+  hideElement('customer-search-dashboard')
+}
 
+
+function searchRoomsByDate() {
+  let searchDate = document.querySelector('.room-search-date').value
+  if(searchDate.length === 10) {
+    searchDate = searchDate.replace(/-/g, '/')
+    let roomsAvailable = getAvailableRooms(searchDate)
+    displaySearchDom()
+  }
+}
+
+function displaySearchDom() {
+  displayElement('room-filter-buttons')
+  displayElement('available-rooms')
+}
+function getAvailableRooms(date) {
+  let dayBookings = bookingsByDate(date)
+  let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
+  dayBookings.forEach(booking => {
+    availableRooms = availableRooms.filter(room => {
+      return room.number !== booking.roomNumber
+    })
+  })
+  return availableRooms
+  console.log('available rooms', availableRooms);
 }

@@ -22,14 +22,14 @@
       border: solid .1em;
     }
   }
-  .return-customer-dashboard{
+  .return-customer-dashboard{ // doesn't hide
     @extend .book-room;
     .return-customer-page-button{
       @extend .book-room-button;
     }
 
   }
-  .room-filter-buttons{
+  .room-filter-buttons{ //doesn't hide
     background-color: grey;
     width: 85%;
     height: 5em;
@@ -52,9 +52,9 @@
       align-self: center;
     }
   }
-  .available-rooms{
+  .available-rooms{ //doesn't hide
     @extend .my-bookings;
-    .room{
+    .room{ //doesn't hide
       @extend .booking;
       height: 2.5em;
       .book-button{
@@ -69,4 +69,12 @@
       }
     }
   }
+
+  .hidden {
+    display: none;
+  }
+}
+
+.hidden {
+  display: none;
 }

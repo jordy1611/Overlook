@@ -11,6 +11,7 @@ class AllRooms {
   filterRoomsByType(roomType) {
     return this.allRooms.filter(room => room.roomType === roomType)
   }
+
 }
 
 export default AllRooms
