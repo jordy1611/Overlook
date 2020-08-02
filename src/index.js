@@ -93,9 +93,11 @@ function clickHandler(event) {
     bookRoom(event)
     displayCustomerPage()
   } else if(event.target.classList.contains('search-customers-button')) {
-    displayManagerPage()
+    displayManagerSearchPage()
   } else if(event.target.classList.contains('return-manager-page-button')) {
     displayManagerPage()
+  } else if(event.target.classList.contains('book-customer-room-button')) {
+    // displayRoomSearch()
   }
 }
 
@@ -169,7 +171,7 @@ function displayBookings(bookings, className) {
   //     return -1
   //   } return 0
   // })
-  document.querySelector(`.${className}`).innerHTML = '<h3>Your Bookings</h3>'
+  document.querySelector(`.${className}`).innerHTML = '<h3>Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
       <article class="booking">
@@ -236,11 +238,13 @@ function displaySearchDom() {
   const roomsOnDate = filterRoomsByDate()
   displayElement('room-filter-buttons')
   displayElement('available-rooms')
-  displayRooms(roomsOnDate)
+  // const availableRooms = document.querySelector('.available-rooms')
+  displayRooms('available-rooms', roomsOnDate)
 }
 
-function displayRooms(rooms) {
-  const availableRooms = document.querySelector('.available-rooms') //going to have to delcare a step higher
+function displayRooms(className, rooms) {
+  // const availableRooms = document.querySelector('.available-rooms') //going to have to delcare a step higher
+  const availableRooms = document.querySelector(`.${className}`);
   availableRooms.innerHTML = '<h3>Available Rooms</h3>'
   rooms.forEach(room => {
     const bidet = room.bidet ? 'Bidet' : 'No Bidet'
@@ -293,4 +297,25 @@ function bookRoom(event) {
 
 function displayManagerSearchPage() {
 
+  const searchCustomer = getSearchedCustomer()
+  if (searchCustomer !== undefined) {
+  // displayRooms('manager-user-bookings', )
+    let customerBookings = hotelData.bookings.getBookingsByUser(searchCustomer.id)
+    displayBookings(customerBookings, 'manager-user-bookings')
+    hideElement('manager-dashboard')
+    hideElement('return-customer-manager-page')
+    hideElement('manager-available-rooms')
+    displayElement('manager-customer-view-dashboard')
+    displayElement('manager-customer-view')
+    displayElement('return-manager-dashboard')
+    displayElement('manager-user-bookings')
+  }
+}
+
+function getSearchedCustomer() {
+  const searchName = document.querySelector('.search-customer-input').value
+  const searchCustomer = hotelData.customers.customers.find(customer => {
+    return customer.name === searchName
+  })
+  return searchCustomer || undefined
 }
