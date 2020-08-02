@@ -18,7 +18,7 @@ import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
-
+let searchDate
 let currentUser = new User()
 const hotelData = {
   customers: [],
@@ -30,11 +30,6 @@ let hasBookingDataLoaded = false
 let mostRecentDate;
 let todayDate = new Date()
 todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
-
-// function onLoadTest() {
-//   console.log('good luck')
-//   displayBookRoomPage()
-// }
 
 fetchAllData()
   .then((data) => {
@@ -88,17 +83,16 @@ function clickHandler(event) {
     event.preventDefault();
     login();
   } else if(event.target.classList.contains('book-room-button')) {
-    console.log('book a room')
     displayBookRoomPage();
   } else if(event.target.classList.contains('return-customer-page-button')) {
-      console.log('return to customer page')
     displayCustomerPage();
     hideCustomerSearchPage();
   } else if(event.target.classList.contains('search-room-button')) {
-    console.log('customer search rooms')
-    filterRoomsByDate()
+    displaySearchDom()
   } else if(event.target.closest('.room-filter-buttons')) {
     searchRoomsByType(event)
+  } else if(event.target.classList.contains('book-button')) {
+    bookRoom(event)
   }
 }
 
@@ -131,10 +125,8 @@ function displayUserPage() {
   hideElement('login-form')
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
-    // console.log('manager display')
     displayManagerPage()
   } else if(currentUser instanceof Customer) {
-    // console.log('customer display')
     displayCustomerPage()
   }
 }
@@ -203,12 +195,12 @@ function hideCustomerSearchPage() {
 
 
 function filterRoomsByDate() { // not good srp
-  let searchDate = document.querySelector('.room-search-date').value
+  searchDate = document.querySelector('.room-search-date').value
   let allRoomsAvailable
   if(searchDate.length === 10) {
     searchDate = searchDate.replace(/-/g, '/')
     allRoomsAvailable = getAvailableRooms(searchDate) //just pass in function on line 207
-    displaySearchDom(allRoomsAvailable)
+    // displaySearchDom(allRoomsAvailable)
     return allRoomsAvailable
   }
 }
@@ -225,10 +217,11 @@ function getAvailableRooms(date) {
   return availableRooms
 }
 
-function displaySearchDom(rooms) {
+function displaySearchDom() {
+  const roomsOnDate = filterRoomsByDate()
   displayElement('room-filter-buttons')
   displayElement('available-rooms')
-  displayRooms(rooms)
+  displayRooms(roomsOnDate)
 }
 
 function displayRooms(rooms) {
@@ -237,7 +230,7 @@ function displayRooms(rooms) {
   rooms.forEach(room => {
     const bidet = room.bidet ? 'Bidet' : 'No Bidet'
     const singleRoom = `
-    <article class="room">
+    <article class="room" data-id="${room.number}">
       <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
       <p class="room-type">${room.roomType}</p>
       <p class="bed-size">bed size: ${room.bedSize}</p>
@@ -255,19 +248,14 @@ function displayRooms(rooms) {
 function searchRoomsByType() {
   if (event.target.classList.contains('all-rooms-button')) {
     filterRoomsByDate()
-    console.log('1')
   } else if(event.target.classList.contains('residential-suite-button')) {
     filterRoomsByType('residential suite')
-    console.log('2')
   } else if(event.target.classList.contains('junior-suite-button')) {
     filterRoomsByType('junior suite')
-    console.log('3')
   } else if(event.target.classList.contains('suite-button')) {
     filterRoomsByType('suite')
-    console.log('4')
   } else if(event.target.classList.contains('single-room-button')) {
     filterRoomsByType('single room')
-    console.log('5')
   }
 }
 
@@ -275,4 +263,14 @@ function filterRoomsByType(roomType) {
   const allRooms = filterRoomsByDate()
   const filteredRooms = allRooms.filter(room => room.roomType === roomType)
   displayRooms(filteredRooms)
+}
+
+function bookRoom(event) {
+  const roomNumber = event.target.closest('.room').dataset.id
+  const booking = {
+    userID: currentUser.id,
+    date: searchDate,
+    roomNumber: roomNumber
+  }
+  console.log(booking)
 }
