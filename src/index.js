@@ -92,6 +92,10 @@ function clickHandler(event) {
   } else if(event.target.classList.contains('book-button')) {
     bookRoom(event)
     displayCustomerPage()
+  } else if(event.target.classList.contains('search-customers-button')) {
+    displayManagerPage()
+  } else if(event.target.classList.contains('return-manager-page-button')) {
+    displayManagerPage()
   }
 }
 
@@ -133,6 +137,7 @@ function displayUserPage() {
 function displayManagerPage() {
   let bookingsToday = bookingsByDate(mostRecentDate)
   displayElement('manager-dashboard')
+  hideElement('manager-customer-view-dashboard')
   displayBookings(bookingsToday, 'bookings-today')
   displayTodayStats(bookingsToday)
 }
@@ -235,7 +240,7 @@ function displaySearchDom() {
 }
 
 function displayRooms(rooms) {
-  const availableRooms = document.querySelector('.available-rooms')
+  const availableRooms = document.querySelector('.available-rooms') //going to have to delcare a step higher
   availableRooms.innerHTML = '<h3>Available Rooms</h3>'
   rooms.forEach(room => {
     const bidet = room.bidet ? 'Bidet' : 'No Bidet'
@@ -284,4 +289,8 @@ function bookRoom(event) {
   }
   hotelData.bookings.bookings.unshift(new Booking(booking))
   postNewBooking(booking)
+}
+
+function displayManagerSearchPage() {
+
 }
