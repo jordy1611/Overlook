@@ -94,6 +94,7 @@ function clickHandler(event) {
     searchRoomsByType(event)
   } else if(event.target.classList.contains('book-button')) {
     bookRoom(event)
+    displayCustomerPage()
   }
 }
 
@@ -153,6 +154,9 @@ function displayCustomerPage() {
   displayElement('customer-dashboard');
   displayBookings(customerBookings, 'my-bookings');
   displayUserCosts(customerBookings);
+  hideElement('room-filter-buttons')
+  hideElement('available-rooms')
+  hideElement('customer-search-dashboard')
 }
 
 function displayBookings(bookings, className) {
@@ -281,11 +285,11 @@ function bookRoom(event) {
   const booking = {
     userID: currentUser.id,
     date: searchDate,
-    roomNumber: parseInt(roomNumber),
-    roomServiceCharges: []
+    roomNumber: parseInt(roomNumber)
   }
   console.log('booking', booking)
   hotelData.bookings.bookings.unshift(new Booking(booking))
   // postNewBooking(booking)
-  // updateBookings
+
+
 }
