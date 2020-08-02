@@ -260,7 +260,7 @@ function displayRooms(rooms) {
 
 function searchRoomsByType() {
   if (event.target.classList.contains('all-rooms-button')) {
-    filterRoomsByDate()
+    displaySearchDom()
   } else if(event.target.classList.contains('residential-suite-button')) {
     filterRoomsByType('residential suite')
   } else if(event.target.classList.contains('junior-suite-button')) {
@@ -279,7 +279,6 @@ function filterRoomsByType(roomType) {
 }
 
 function bookRoom(event) {
-  console.log('room booked')
   // wtf to i display after booking? Go back to my page?
   const roomNumber = event.target.closest('.room').dataset.id
   const booking = {
