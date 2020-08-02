@@ -3,14 +3,7 @@
   .select-a-date{
     @extend .total-spent;
     .room-search-date{
-      // margin-top: -3em;
-      font-size: .6em;
-      font-weight: bold;
-      text-align: center;
-      width: 11em;
-      height: 2em;
-      border: solid .2em;
-      border-radius: .4em;
+    @include input()
     }
     .search-room-button{
       font-size: 1em;
