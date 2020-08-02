@@ -4,21 +4,21 @@
     @extend .total-spent;
     .customer-info{
       font-size: 1em;
-      margin-top: -1em;
+      margin-top: -1.5em;
       margin-bottom: .5em;
     }
 
       .manager-room-search-date{
         @include input();
         // width: 10em;
-        margin-top: 1em;
+        margin-top: .8em;
         // margin-right: 3em;
         // margin-left: 1em;
       }
 
       .book-customer-room-button{
         // font-size: .9em;
-        margin-top: .5em;
+        margin-top: .3em;
         // margin-left: 2.5em;
         font-size: 1em;
         font-weight: bold;

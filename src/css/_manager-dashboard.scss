@@ -22,5 +22,17 @@
   }
   .bookings-today{
     @extend .my-bookings;
+    .booking{
+      .delete-booking-button{
+        font-size: 1em;
+        font-weight: bold;
+        width: 13em;
+        height: 1.7em;
+        margin-left: .5em;
+        margin-right: 1em;
+        border: solid .2em;
+        border-radius: .1em;
+      }
+    }
   }
 }
