@@ -279,7 +279,6 @@ function filterRoomsByType(roomType) {
 }
 
 function bookRoom(event) {
-  // wtf to i display after booking? Go back to my page?
   const roomNumber = event.target.closest('.room').dataset.id
   const booking = {
     userID: currentUser.id,
@@ -288,7 +287,7 @@ function bookRoom(event) {
   }
   console.log('booking', booking)
   hotelData.bookings.bookings.unshift(new Booking(booking))
-  // postNewBooking(booking)
+  postNewBooking(booking)
 
 
 }
