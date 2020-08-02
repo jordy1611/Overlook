@@ -10,6 +10,7 @@
 @import 'customer-dashboard';
 @import 'manager-dashboard';
 @import 'customer-search-dashboard';
+@import 'manager-search-dashboard';
 
 
 * {
@@ -47,7 +48,3 @@ h3{
 .hidden{
   display: none;
 }
-
-// .login-form {
-//   @include color()
-// }

@@ -75,9 +75,6 @@ fetchAllData()
   }
 
 window.addEventListener('click', clickHandler)
-// window.addEventListener('click', clickHandler);
-
-
 
 function clickHandler(event) {
   if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
@@ -285,9 +282,6 @@ function bookRoom(event) {
     date: searchDate,
     roomNumber: parseInt(roomNumber)
   }
-  console.log('booking', booking)
   hotelData.bookings.bookings.unshift(new Booking(booking))
   postNewBooking(booking)
-
-
 }
