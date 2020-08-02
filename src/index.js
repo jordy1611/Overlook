@@ -19,6 +19,7 @@ import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
 
+let searchDate
 let currentUser = new User()
 const hotelData = {
   customers: [],
@@ -30,10 +31,6 @@ let hasBookingDataLoaded = false
 let mostRecentDate;
 let todayDate = new Date()
 todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
-
-function onLoadTest() {
-  console.log('good luck')
-}
 
 fetchAllData()
   .then((data) => {
@@ -51,7 +48,7 @@ fetchAllData()
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
     getMostRecentDate()
-    onLoadTest()
+    // onLoadTest()
   })
   // .then(() => {onLoadTest()})
 
@@ -86,6 +83,18 @@ function clickHandler(event) {
   if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
     event.preventDefault();
     login();
+  } else if(event.target.classList.contains('book-room-button')) {
+    displayBookRoomPage();
+  } else if(event.target.classList.contains('return-customer-page-button')) {
+    displayCustomerPage();
+    hideCustomerSearchPage();
+  } else if(event.target.classList.contains('search-room-button')) {
+    displaySearchDom()
+  } else if(event.target.closest('.room-filter-buttons')) {
+    searchRoomsByType(event)
+  } else if(event.target.classList.contains('book-button')) {
+    bookRoom(event)
+    displayCustomerPage()
   }
 }
 
@@ -93,13 +102,13 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   loginUser(userName, password)
-  displayUserPage()
+  displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
 }
 
 function loginUser(userName, password) {
   if (userName === 'manager') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) {
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
@@ -118,21 +127,22 @@ function displayUserPage() {
   hideElement('login-form')
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
-    // console.log('manager display')
     displayManagerPage()
   } else if(currentUser instanceof Customer) {
-    // console.log('customer display')
     displayCustomerPage()
   }
 }
 
 function displayManagerPage() {
-  let bookingsToday = hotelData.bookings.getBookingsByDate(mostRecentDate)
+  let bookingsToday = bookingsByDate(mostRecentDate)
   displayElement('manager-dashboard')
   displayBookings(bookingsToday, 'bookings-today')
   displayTodayStats(bookingsToday)
 }
 
+function bookingsByDate(date) {
+  return hotelData.bookings.getBookingsByDate(date)
+}
 function displayTodayStats(bookingsToday) {
   const totalToday = currentUser.getBookingsCost(bookingsToday, hotelData.rooms)
   document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
@@ -141,12 +151,23 @@ function displayTodayStats(bookingsToday) {
 
 function displayCustomerPage() {
   let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
-  displayElement('user-dashboard');
+  displayElement('customer-dashboard');
   displayBookings(customerBookings, 'my-bookings');
   displayUserCosts(customerBookings);
+  hideElement('room-filter-buttons')
+  hideElement('available-rooms')
+  hideElement('customer-search-dashboard')
 }
 
 function displayBookings(bookings, className) {
+  // bookings.sort((a, b) => {
+  //   if(a.date < b.date) {
+  //     return 1
+  //   } else if(a.date > b.date) {
+  //     return -1
+  //   } return 0
+  // })
+  document.querySelector(`.${className}`).innerHTML = '<h3>Your Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
       <article class="booking">
@@ -172,4 +193,101 @@ function displayElement(className) {
 
 function hideElement(className) {
   document.querySelector(`.${className}`).classList.add('hidden')
+}
+
+function displayBookRoomPage() {
+  hideElement('customer-dashboard')
+  displayElement('customer-search-dashboard')
+}
+
+function hideCustomerSearchPage() {
+  hideElement('room-filter-buttons')
+  hideElement('available-rooms')
+  hideElement('customer-search-dashboard')
+}
+
+
+function filterRoomsByDate() { // not good srp
+  searchDate = document.querySelector('.room-search-date').value
+  let allRoomsAvailable
+  if(searchDate.length === 10) {
+    searchDate = searchDate.replace(/-/g, '/')
+    allRoomsAvailable = getAvailableRooms(searchDate) //just pass in function on line 207
+    // displaySearchDom(allRoomsAvailable)
+    return allRoomsAvailable
+  }
+}
+
+
+function getAvailableRooms(date) {
+  let dayBookings = bookingsByDate(date)
+  let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
+  dayBookings.forEach(booking => {
+    availableRooms = availableRooms.filter(room => {
+      return room.number !== booking.roomNumber
+    })
+  })
+  return availableRooms
+}
+
+function displaySearchDom() {
+  const roomsOnDate = filterRoomsByDate()
+  displayElement('room-filter-buttons')
+  displayElement('available-rooms')
+  displayRooms(roomsOnDate)
+}
+
+function displayRooms(rooms) {
+  const availableRooms = document.querySelector('.available-rooms')
+  availableRooms.innerHTML = '<h3>Available Rooms</h3>'
+  rooms.forEach(room => {
+    const bidet = room.bidet ? 'Bidet' : 'No Bidet'
+    const singleRoom = `
+    <article class="room" data-id="${room.number}">
+      <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+      <p class="room-type">${room.roomType}</p>
+      <p class="bed-size">bed size: ${room.bedSize}</p>
+      <p class="num-beds">beds: ${room.numBeds}</p>
+      <p class="bidet">${bidet}</p>
+      <p class="room-number">room# ${room.number}</p>
+      <p class="cost">$${room.costPerNight}</p>
+    </article>
+    `
+    availableRooms.insertAdjacentHTML('beforeEnd', singleRoom)
+  })
+
+}
+
+function searchRoomsByType() {
+  if (event.target.classList.contains('all-rooms-button')) {
+    displaySearchDom()
+  } else if(event.target.classList.contains('residential-suite-button')) {
+    filterRoomsByType('residential suite')
+  } else if(event.target.classList.contains('junior-suite-button')) {
+    filterRoomsByType('junior suite')
+  } else if(event.target.classList.contains('suite-button')) {
+    filterRoomsByType('suite')
+  } else if(event.target.classList.contains('single-room-button')) {
+    filterRoomsByType('single room')
+  }
+}
+
+function filterRoomsByType(roomType) {
+  const allRooms = filterRoomsByDate()
+  const filteredRooms = allRooms.filter(room => room.roomType === roomType)
+  displayRooms(filteredRooms)
+}
+
+function bookRoom(event) {
+  const roomNumber = event.target.closest('.room').dataset.id
+  const booking = {
+    userID: currentUser.id,
+    date: searchDate,
+    roomNumber: parseInt(roomNumber)
+  }
+  console.log('booking', booking)
+  hotelData.bookings.bookings.unshift(new Booking(booking))
+  postNewBooking(booking)
+
+
 }

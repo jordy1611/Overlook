@@ -1,4 +1,4 @@
-.user-dashboard{
+.customer-dashboard{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -29,6 +29,7 @@
       align-self: center;
       height: 4em;
       width: 10em;
+      border: solid .1em;
       border-radius: .3em;
     }
   }
@@ -36,17 +37,11 @@
   .my-bookings{
     display: flex;
     flex-direction: column;
-    width: 78em;
+    width: 85%;
     background-color:grey;
     border: solid .2em;
     padding-bottom: .5em;
     border-radius: 1em 4em;
-    h3{
-      text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      margin-top: .4em;
-    }
     .booking{
       width: 55em;
       height: 1.5em;
@@ -56,9 +51,11 @@
       justify-content: space-between;
       align-items: center;
       font-size: 1.2em;
+      font-weight: bold;
       margin-top: .5em;
       background-color: white;
-      border: solid .1em;
+      border: solid .2em;
+      border-radius: .2em;
       .booking-date,
       .booking-room,
       .booking-cost {

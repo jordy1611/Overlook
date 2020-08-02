@@ -17,7 +17,7 @@
       <input class="password-input" type="password"></input>
       <button class="login-button" aria-label="Log in as user button" alt="Log in as user button">Login</button>
     </form>
-    <section tabindex=0 class="user-dashboard hidden">
+    <section tabindex=0 class="customer-dashboard hidden">
       <p class="total-spent"></br>
         Congratulations!</br></br>
         You Spent $<span class="customer-total"></span>
@@ -28,6 +28,54 @@
       </section>
       <section class="my-bookings">
         <h3>Your Bookings</h3>
+      </section>
+    </section>
+    <section tabindex=0 class="customer-search-dashboard hidden">
+      <section class="select-a-date">
+        <p>What date would you like to stay at the Overlook Hotel?</p></br>
+        <input type="date" name="date" class="room-search-date"></input></br>
+        <button class="search-room-button">Search Rooms</button>
+      </section>
+      <section class="return-customer-dashboard">
+        <p>Return to your page</p>
+        <button class="return-customer-page-button">Return</button>
+      </section>
+      <section tabindex= 0 class="room-filter-buttons hidden">
+        <button class="all-rooms-button" aria-label="Select all room types" alt="select all room types button">All Rooms</button>
+        <button class="residential-suite-button" aria-label="Select residential suites" alt="select residential suites button">Residential Suites</button>
+        <button class="junior-suite-button" aria-label="Select junior suites" alt="select junior suites button">Junior Suites</button>
+        <button class="suite-button" aria-label="Select suites" alt="select suites button">Suites</button>
+        <button class="single-room-button" aria-label="Select single rooms" alt="select single rooms button">Single Rooms</button>
+      </section>
+      <section tabindex=0 class="available-rooms hidden">
+        <h3>Available Rooms</h3>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">Residential Suite</p>
+          <p class="bed-size">Bed Size: Queen</p>
+          <p class="num-beds">1 Bed</p>
+          <p class="bidet">Bidet</p>
+          <p class="room-number">Room  20</p>
+          <p class="cost">$750.50</p>
+        </article>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">Residential Suite</p>
+          <p class="bed-size">Bed Size: Queen</p>
+          <p class="num-beds">1 Bed</p>
+          <p class="bidet">No Bidet</p>
+          <p class="room-number">Room 20</p>
+          <p class="cost">$750.50</p>
+        </article>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">Residential Suite</p>
+          <p class="bed-size">Bed Size: Queen</p>
+          <p class="num-beds">2 Beds</p>
+          <p class="bidet">Bidet</p>
+          <p class="room-number">Room 20</p>
+          <p class="cost">$750.50</p>
+        </article>
       </section>
     </section>
     <section tabindex=0 class="manager-dashboard hidden">
