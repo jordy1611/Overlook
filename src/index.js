@@ -18,6 +18,7 @@ import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
+
 let searchDate
 let currentUser = new User()
 const hotelData = {
@@ -270,7 +271,10 @@ function bookRoom(event) {
   const booking = {
     userID: currentUser.id,
     date: searchDate,
-    roomNumber: roomNumber
+    roomNumber: parseInt(roomNumber),
+    roomServiceCharges: []
   }
-  console.log(booking)
+  hotelData.bookings.bookings.push(booking)
+  // postUserBooking(booking)
+  // updateBookings
 }
