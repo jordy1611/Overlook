@@ -1,45 +1,98 @@
-.manager-user-view-dashboard{
+.manager-customer-view-dashboard{
   @extend .customer-dashboard;
-  .customer-info{
+  .manager-customer-view{
     @extend .total-spent;
-  }
-  .manager-add-booking{
-    @extend .total-spent;
+    .customer-info{
+      font-size: 1em;
+      margin-top: -1em;
+      margin-bottom: .5em;
+    }
+    // .add-booking-text{
+    //
+    // }
     form{
-      font-size:1em;
+      display: flex;
+      // justify-content: space-evenly;
+      flex-wrap: wrap;
+      margin-top: .4em;
       .manager-room-search-date{
-        @include input()
-        margin-top: 2em;
-        // justify-content: center;
+        @include input();
+        width: 10em;
+        margin-right: 3em;
+        margin-left: 1em;
       }
       div{
         display: flex;
-        justify-content: center;
-        align-content: center;
-        p {
-          font-size: .9em;
-          margin-top: .6em;
-          margin-right: .1em;
-          align-self: center;
-          width: auto;
+        align-items: flex-end;
+        width:4.5em;
+        p{
+
         }
         .room-number-input{
-          @include input()
-          margin-top: 1em;
-          font-size: .5em;
-          width: 4em;
+          @include input();
+          width: 3.5em;
+          height: 1.7em;
         }
       }
       .book-customer-room-button{
-        margin-top: 1em;
-        font-size: .8em;
-        width: 12em;
-        height: 1.5em;
-        border: solid .15em;
+        // font-size: .9em;
+        margin-top: .8em;
+        margin-left: 2.5em;
+        font-size: 1em;
+        font-weight: bold;
+        line-height: 1em;
+        align-self: center;
+        height: 2em;
+        width: 8em;
+        border: solid .1em;
         border-radius: .3em;
       }
     }
+  };
+  .return-manager-dashboard{
+    @extend .book-room;
+    .return-manager-page-button{
+      @extend .book-room-button;
+    }
   }
+
+  // .manager-add-booking{
+  //   @extend .room-filter-buttons;
+  //   form{
+  //     font-size:1em;
+  //     .manager-room-search-date{
+  //       @include input()
+  //       margin-top: 2em;
+  //       // justify-content: center;
+  //     }
+  //     div{
+  //       display: flex;
+  //       justify-content: center;
+  //       align-content: center;
+  //       p {
+  //         font-size: .9em;
+  //         margin-top: .6em;
+  //         margin-right: .1em;
+  //         align-self: center;
+  //         width: auto;
+  //       }
+  //       .room-number-input{
+  //         @include input()
+  //         margin-top: 1em;
+  //         font-size: .5em;
+  //         width: 4em;
+  //       }
+  //     }
+  //     .book-customer-room-button{
+  //       margin-top: 1em;
+  //       font-size: .8em;
+  //       width: 12em;
+  //       height: 1.5em;
+  //       border: solid .15em;
+  //       border-radius: .3em;
+  //     }
+  //   }
+  // }
   .manager-user-bookings{
     @extend .my-bookings;
     .booking{
