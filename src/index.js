@@ -156,6 +156,14 @@ function displayCustomerPage() {
 }
 
 function displayBookings(bookings, className) {
+  // bookings.sort((a, b) => {
+  //   if(a.date < b.date) {
+  //     return 1
+  //   } else if(a.date > b.date) {
+  //     return -1
+  //   } return 0
+  // })
+  document.querySelector(`.${className}`).innerHTML = '<h3>Your Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
       <article class="booking">
@@ -267,6 +275,8 @@ function filterRoomsByType(roomType) {
 }
 
 function bookRoom(event) {
+  console.log('room booked')
+  // wtf to i display after booking? Go back to my page?
   const roomNumber = event.target.closest('.room').dataset.id
   const booking = {
     userID: currentUser.id,
@@ -274,7 +284,8 @@ function bookRoom(event) {
     roomNumber: parseInt(roomNumber),
     roomServiceCharges: []
   }
-  hotelData.bookings.bookings.push(booking)
-  // postUserBooking(booking)
+  console.log('booking', booking)
+  hotelData.bookings.bookings.unshift(new Booking(booking))
+  // postNewBooking(booking)
   // updateBookings
 }
