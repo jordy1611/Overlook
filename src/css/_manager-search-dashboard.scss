@@ -1,0 +1,10 @@
+.manager-user-view-dashboard{
+  @extend .customer-dashboard;
+  .customer-info{
+    @extend .total-spent;
+  }
+  .manager-add-booking{
+    @extend .total-spent;
+  }
+  
+}
