@@ -156,7 +156,7 @@ function displayManagerPage() {
       console.log('ind booking fetch', hotelData.bookings)
     })
     .then(() => {
-      let bookingsToday = bookingsByDate(mostRecentDate)
+      let bookingsToday = bookingsByDate(todayDate)
       displayElement('manager-dashboard')
       hideElement('manager-customer-view-dashboard')
       displayBookingsManager(bookingsToday, 'bookings-today')
@@ -207,6 +207,7 @@ function displayBookingsManager(bookings, className) { // manager can't delete n
     let singleBooking = `
       <article class="booking" data-id="${booking.id}">
         <button class="delete-booking-button">Delete</button>
+        <p tabindex=0><span class="booking-userID">UserID: ${booking.userID}</span></p>
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
         <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
@@ -377,10 +378,8 @@ function displayManagerSearchPage() {
       .then(() => {
         hotelData.bookings = new AllBookings(hotelData.bookings)
         hasBookingDataLoaded = true
-        console.log('ind booking fetch', hotelData.bookings)
       })
       .then(() => {
-        console.log('bookings', hotelData.bookings)
         let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
         customerBookings = sortBookingsByDate(customerBookings)
 
@@ -431,15 +430,33 @@ function removeBooking(event) {
   const bookingID = event.target.closest('.booking').dataset.id
   const bookingToDelete = hotelData.bookings.bookings.find(booking => {
     return booking.id === parseInt(bookingID)
-  })
-  if (bookingToDelete.date >= todayDate) {
+  }) || null
+  if (bookingToDelete !== null && bookingToDelete.date >= todayDate) {
+    console.log('DELETE')
     const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
      hotelData.bookings.bookings.splice(index, 1)
      deleteBookingFetch(bookingToDelete)
      alert('Booking Deleted')
+     displayManagerPage()
+  }
+}
+
+function deleteBookingData(event) {
+  const bookingID = event.target.closest('.booking').dataset.id
+  const bookingToDelete = hotelData.bookings.bookings.find(booking => {
+    return booking.id === parseInt(bookingID)
+  }) || null
+  if (bookingToDelete !== null && bookingToDelete.date >= todayDate) {
+    console.log('DELETE')
+    const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
+     hotelData.bookings.bookings.splice(index, 1)
+     deleteBookingFetch(bookingToDelete)
+     alert('Booking Deleted')
+     displayManagerPage()
 
   }
 }
+
 
 function sortBookingsByDate(bookings) {
   return bookings.sort((a, b) => {

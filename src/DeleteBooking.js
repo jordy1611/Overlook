@@ -7,5 +7,6 @@ function deleteBookingFetch(booking) {
   .then(response => response.json())
   .then(json => console.log('Request success: ', json))
   .catch(err => console.log(err));
+
 }
 export default deleteBookingFetch
