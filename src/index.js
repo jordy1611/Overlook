@@ -111,14 +111,16 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   loginUser(userName, password)
-  displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
+  // displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
 }
 
 function loginUser(userName, password) {
-  if (userName === 'manager') {
+  if (userName === 'manager' && password === 'overlook2020') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 'number'
+    displayUserPage()
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
+    displayUserPage()
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
   }
@@ -347,9 +349,9 @@ function searchRoomsByType() {
 }
 
 function filterRoomsByType(roomType) {
-  const allRooms = filterRoomsByDate()
+  const allRooms = filterRoomsByDate(searchDate)
   const filteredRooms = allRooms.filter(room => room.roomType === roomType)
-  displayRooms(filteredRooms)
+  displayRooms('available-rooms', filteredRooms)
 }
 
 function bookRoom(event) {
