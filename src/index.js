@@ -54,14 +54,16 @@ fetchAllData()
   // .then(() => {onLoadTest()})
 
 
-// fetchAllBookingData()
-//   .then(data => {
-//     bookings = data
-//     hasBookingDataLoaded = true
-//   })
-//   .then(() => console.log(bookings))
-  // .then(() => {bookings = bookings.map(booking => new Booking(booking))})
-  // .then(() => {bookings = new AllBookings(Bookings)})
+fetchAllBookingData()
+  .then(data => {
+    hotelData.bookings = data
+  })
+  .then(() => {hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))})
+  .then(() => {
+    hotelData.bookings = new AllBookings(hotelData.bookings)
+    hasBookingDataLoaded = true
+    console.log('ind booking fetch', hotelData.bookings)
+  })
 
   function getMostRecentDate() {
     let sortedBookings = hotelData.bookings.bookings.sort((a, b) => {
@@ -142,11 +144,23 @@ function displayUserPage() {
 
 function displayManagerPage() {
   //get new bookimgs, followings is in a then statement
-  let bookingsToday = bookingsByDate(mostRecentDate)
-  displayElement('manager-dashboard')
-  hideElement('manager-customer-view-dashboard')
-  displayBookingsManager(bookingsToday, 'bookings-today')
-  displayTodayStats(bookingsToday)
+  fetchAllBookingData()
+    .then(data => {
+      hotelData.bookings = data
+    })
+    .then(() => {hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))})
+    .then(() => {
+      hotelData.bookings = new AllBookings(hotelData.bookings)
+      hasBookingDataLoaded = true
+      console.log('ind booking fetch', hotelData.bookings)
+    })
+    .then(() => {
+      let bookingsToday = bookingsByDate(mostRecentDate)
+      displayElement('manager-dashboard')
+      hideElement('manager-customer-view-dashboard')
+      displayBookingsManager(bookingsToday, 'bookings-today')
+      displayTodayStats(bookingsToday)
+    })
 }
 
 function bookingsByDate(date) {
@@ -160,13 +174,25 @@ function displayTodayStats(bookingsToday) {
 
 function displayCustomerPage() {
   // get new bookings, following is in a then statement
-  let customerBookings = getCustomerBookings(currentUser)
-  displayElement('customer-dashboard');
-  displayCustomerBookings(customerBookings, 'my-bookings');
-  displayUserCosts(customerBookings);
-  hideElement('room-filter-buttons')
-  hideElement('available-rooms')
-  hideElement('customer-search-dashboard')
+  fetchAllBookingData()
+    .then(data => {
+      hotelData.bookings = data
+    })
+    .then(() => {hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))})
+    .then(() => {
+      hotelData.bookings = new AllBookings(hotelData.bookings)
+      hasBookingDataLoaded = true
+      console.log('ind booking fetch', hotelData.bookings)
+    })
+    .then(() => {
+      let customerBookings = getCustomerBookings(currentUser)
+      displayElement('customer-dashboard');
+      displayCustomerBookings(customerBookings, 'my-bookings');
+      displayUserCosts(customerBookings);
+      hideElement('room-filter-buttons')
+      hideElement('available-rooms')
+      hideElement('customer-search-dashboard')
+    })
 }
 
 function getCustomerBookings(user) {
@@ -341,16 +367,28 @@ function displayManagerSearchPage() {
   currentCustomer = getSearchedCustomer()
   if (currentCustomer !== undefined) {
     // fetch bookings, all of the following is in a .then
-    let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id)
-    displayBookingsManager(customerBookings, 'manager-user-bookings')
-    hideElement('manager-dashboard')
-    hideElement('return-customer-manager-page')
-    hideElement('manager-available-rooms')
-    displayElement('manager-customer-view-dashboard')
-    displayElement('manager-customer-view')
-    displayElement('return-manager-dashboard')
-    displayElement('manager-user-bookings')
-    displayUserSearchCard(currentCustomer)
+    fetchAllBookingData()
+      .then(data => {
+        hotelData.bookings = data
+      })
+      .then(() => {hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))})
+      .then(() => {
+        hotelData.bookings = new AllBookings(hotelData.bookings)
+        hasBookingDataLoaded = true
+        console.log('ind booking fetch', hotelData.bookings)
+      })
+      .then(() => {
+        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id)
+        displayBookingsManager(customerBookings, 'manager-user-bookings')
+        hideElement('manager-dashboard')
+        hideElement('return-customer-manager-page')
+        hideElement('manager-available-rooms')
+        displayElement('manager-customer-view-dashboard')
+        displayElement('manager-customer-view')
+        displayElement('return-manager-dashboard')
+        displayElement('manager-user-bookings')
+        displayUserSearchCard(currentCustomer)
+      })
   }
 }
 
