@@ -11,12 +11,13 @@ import Booking from './Booking';
 import AllBookings from './AllBookings';
 import Manager from './Manager';
 // import loginUser from './loginUser'
-import deleteBooking from './DeleteBooking';
+import deleteBookingFetch from './DeleteBooking';
 import domUpdates from './DomUpdates';
 import fetchAllData from './FetchAllData';
 import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
+
 
 
 let searchDate
@@ -186,6 +187,7 @@ function displayCustomerPage() {
     })
     .then(() => {
       let customerBookings = getCustomerBookings(currentUser)
+      customerBookings = sortBookingsByDate(customerBookings)
       displayElement('customer-dashboard');
       displayCustomerBookings(customerBookings, 'my-bookings');
       displayUserCosts(customerBookings);
@@ -203,7 +205,7 @@ function displayBookingsManager(bookings, className) { // manager can't delete n
   document.querySelector(`.${className}`).innerHTML = '<h3>Customer Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
-      <article class="booking">
+      <article class="booking" data-id="${booking.id}">
         <button class="delete-booking-button">Delete</button>
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
         <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
@@ -218,7 +220,7 @@ function displayCustomerBookings(bookings, className) { // manager can't delete 
   document.querySelector('.my-bookings').innerHTML = '<h3>My Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
-      <article class="booking">
+      <article class="booking" data-id="${booking.id}">
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
         <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
@@ -359,7 +361,7 @@ function bookRoom(event) {
   console.log(hotelData.bookings.bookings)
   hotelData.bookings.bookings.unshift(new Booking(booking))
   console.log(hotelData.bookings.bookings)
-  // postNewBooking(booking)
+  postNewBooking(booking)
 }
 
 function displayManagerSearchPage() {
@@ -378,7 +380,10 @@ function displayManagerSearchPage() {
         console.log('ind booking fetch', hotelData.bookings)
       })
       .then(() => {
-        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id)
+        console.log('bookings', hotelData.bookings)
+        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
+        customerBookings = sortBookingsByDate(customerBookings)
+
         displayBookingsManager(customerBookings, 'manager-user-bookings')
         hideElement('manager-dashboard')
         hideElement('return-customer-manager-page')
@@ -410,6 +415,12 @@ function displayRoomSearch() {
   searchDate = document.querySelector('.manager-room-search-date').value
   searchDate = searchDate.replace(/-/g, '/')
   const roomsOnDate = filterRoomsByDate(searchDate)
+  // roomsOnDate = roomsOnDate.sort((a, b) => {
+  //   if(b.date > a.date ) {
+  //     return 1
+  //   } if (b.date < a.date) {
+  //     return -1
+  //   }
   displayElement('manager-available-rooms')
   hideElement('manager-user-bookings')
   displayRooms('manager-available-rooms', roomsOnDate)
@@ -417,9 +428,32 @@ function displayRoomSearch() {
 }
 
 function removeBooking(event) {
-  const roomNumber = event.target.closest('.booking').dataset.num
+  const bookingID = event.target.closest('.booking').dataset.id
+  console.log(bookingID)
+  const bookingToDelete = hotelData.bookings.bookings.find(booking => {
+    return booking.id === parseInt(bookingID)
+  })
+  const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
+   // console.log(hotelData.bookings.bookings)
+   hotelData.bookings.bookings.splice(index, 1)
+   deleteBookingFetch(bookingToDelete)
+   // console.log(hotelData.bookings.bookings)
+  // console.log(bookingToDeleteIndex)
+  // console.log(hotelData.bookings.bookings)
+  // console.log(bookingToDelete)
   // const booking = hoteData.bookings.bookings.find(booking => booking.)
   // const bookingIndex =
-  hotelData.bookings.bookings.unshift(new Booking(booking))
-  postNewBooking(booking)
+  // hotelData.bookings.bookings.unshift(new Booking(booking))
+  // postNewBooking(booking)
+}
+
+function sortBookingsByDate(bookings) {
+  return bookings.sort((a, b) => {
+    if(b.date > a.date ) {
+      return 1
+    } if (b.date < a.date) {
+      return -1
+    }
+    return 0
+  })
 }
