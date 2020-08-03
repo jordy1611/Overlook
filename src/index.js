@@ -265,10 +265,19 @@ function displaySearchDom() {
   if(searchDate.length === 10) {
       // searchDate = searchDate.replace(/-/g, '/')
     const roomsOnDate = filterRoomsByDate(searchDate)
-    displayElement('room-filter-buttons')
-    displayElement('available-rooms')
-    // const availableRooms = document.querySelector('.available-rooms')
-    displayRooms('available-rooms', roomsOnDate)
+    if(roomsOnDate.length > 0) {
+      displayElement('room-filter-buttons')
+      displayElement('available-rooms')
+      // const availableRooms = document.querySelector('.available-rooms')
+      displayRooms('available-rooms', roomsOnDate)
+    } else {
+      const alertMessage = `We are so sorry to inform you that the OverLook hotel is entirely booked on ${searchDate}.
+      We greatly appreciate your patience and apologize for the inconvenience.
+      You can call the front desk at 1-800-123-3456 to be placed on a wait list for the date of ${searchDate}.
+      Please look at another date to book a room.
+      Thank you!`
+      alert(`${alertMessage}`)
+    }
   }
 }
 
