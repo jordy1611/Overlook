@@ -11,12 +11,13 @@ import Booking from './Booking';
 import AllBookings from './AllBookings';
 import Manager from './Manager';
 // import loginUser from './loginUser'
-import deleteBooking from './DeleteBooking';
+import deleteBookingFetch from './DeleteBooking';
 import domUpdates from './DomUpdates';
 import fetchAllData from './FetchAllData';
 import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
+
 
 
 let searchDate
@@ -31,7 +32,7 @@ let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
 let mostRecentDate;
 let todayDate = new Date()
-todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
+todayDate = todayDate.getFullYear()+'/0'+(todayDate.getMonth()+1)+'/0'+todayDate.getDate();
 
 fetchAllData()
   .then((data) => {
@@ -110,14 +111,16 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   loginUser(userName, password)
-  displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
+  // displayUserPage() //this is still happenning on bad login, should be fuxed with password tho
 }
 
 function loginUser(userName, password) {
-  if (userName === 'manager') {
+  if (userName === 'manager' && password === 'overlook2020') {
     loginAsManager()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50) { //helper function for criteria? May need typeof === 'number'
+    displayUserPage()
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8))) // can add a sad path with the value of this
+    displayUserPage()
   } else {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
   }
@@ -155,7 +158,7 @@ function displayManagerPage() {
       console.log('ind booking fetch', hotelData.bookings)
     })
     .then(() => {
-      let bookingsToday = bookingsByDate(mostRecentDate)
+      let bookingsToday = bookingsByDate(todayDate)
       displayElement('manager-dashboard')
       hideElement('manager-customer-view-dashboard')
       displayBookingsManager(bookingsToday, 'bookings-today')
@@ -186,6 +189,7 @@ function displayCustomerPage() {
     })
     .then(() => {
       let customerBookings = getCustomerBookings(currentUser)
+      customerBookings = sortBookingsByDate(customerBookings)
       displayElement('customer-dashboard');
       displayCustomerBookings(customerBookings, 'my-bookings');
       displayUserCosts(customerBookings);
@@ -203,8 +207,9 @@ function displayBookingsManager(bookings, className) { // manager can't delete n
   document.querySelector(`.${className}`).innerHTML = '<h3>Customer Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
-      <article class="booking">
+      <article class="booking" data-id="${booking.id}">
         <button class="delete-booking-button">Delete</button>
+        <p tabindex=0><span class="booking-userID">UserID: ${booking.userID}</span></p>
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
         <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
@@ -218,7 +223,7 @@ function displayCustomerBookings(bookings, className) { // manager can't delete 
   document.querySelector('.my-bookings').innerHTML = '<h3>My Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
-      <article class="booking">
+      <article class="booking" data-id="${booking.id}">
         <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
         <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
         <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
@@ -344,9 +349,9 @@ function searchRoomsByType() {
 }
 
 function filterRoomsByType(roomType) {
-  const allRooms = filterRoomsByDate()
+  const allRooms = filterRoomsByDate(searchDate)
   const filteredRooms = allRooms.filter(room => room.roomType === roomType)
-  displayRooms(filteredRooms)
+  displayRooms('available-rooms', filteredRooms)
 }
 
 function bookRoom(event) {
@@ -359,7 +364,7 @@ function bookRoom(event) {
   console.log(hotelData.bookings.bookings)
   hotelData.bookings.bookings.unshift(new Booking(booking))
   console.log(hotelData.bookings.bookings)
-  // postNewBooking(booking)
+  postNewBooking(booking)
 }
 
 function displayManagerSearchPage() {
@@ -375,10 +380,11 @@ function displayManagerSearchPage() {
       .then(() => {
         hotelData.bookings = new AllBookings(hotelData.bookings)
         hasBookingDataLoaded = true
-        console.log('ind booking fetch', hotelData.bookings)
       })
       .then(() => {
-        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id)
+        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
+        customerBookings = sortBookingsByDate(customerBookings)
+
         displayBookingsManager(customerBookings, 'manager-user-bookings')
         hideElement('manager-dashboard')
         hideElement('return-customer-manager-page')
@@ -410,6 +416,12 @@ function displayRoomSearch() {
   searchDate = document.querySelector('.manager-room-search-date').value
   searchDate = searchDate.replace(/-/g, '/')
   const roomsOnDate = filterRoomsByDate(searchDate)
+  // roomsOnDate = roomsOnDate.sort((a, b) => {
+  //   if(b.date > a.date ) {
+  //     return 1
+  //   } if (b.date < a.date) {
+  //     return -1
+  //   }
   displayElement('manager-available-rooms')
   hideElement('manager-user-bookings')
   displayRooms('manager-available-rooms', roomsOnDate)
@@ -417,9 +429,44 @@ function displayRoomSearch() {
 }
 
 function removeBooking(event) {
-  const roomNumber = event.target.closest('.booking').dataset.num
-  // const booking = hoteData.bookings.bookings.find(booking => booking.)
-  // const bookingIndex =
-  hotelData.bookings.bookings.unshift(new Booking(booking))
-  postNewBooking(booking)
+  const bookingID = event.target.closest('.booking').dataset.id
+  const bookingToDelete = hotelData.bookings.bookings.find(booking => {
+    return booking.id === parseInt(bookingID)
+  }) || null
+  if (bookingToDelete !== null && bookingToDelete.date >= todayDate) {
+    console.log('DELETE')
+    const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
+     hotelData.bookings.bookings.splice(index, 1)
+     deleteBookingFetch(bookingToDelete)
+     alert('Booking Deleted')
+     displayManagerPage()
+  }
+}
+
+function deleteBookingData(event) {
+  const bookingID = event.target.closest('.booking').dataset.id
+  const bookingToDelete = hotelData.bookings.bookings.find(booking => {
+    return booking.id === parseInt(bookingID)
+  }) || null
+  if (bookingToDelete !== null && bookingToDelete.date >= todayDate) {
+    console.log('DELETE')
+    const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
+     hotelData.bookings.bookings.splice(index, 1)
+     deleteBookingFetch(bookingToDelete)
+     alert('Booking Deleted')
+     displayManagerPage()
+
+  }
+}
+
+
+function sortBookingsByDate(bookings) {
+  return bookings.sort((a, b) => {
+    if(b.date > a.date ) {
+      return 1
+    } if (b.date < a.date) {
+      return -1
+    }
+    return 0
+  })
 }

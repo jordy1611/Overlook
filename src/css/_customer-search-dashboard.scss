@@ -4,6 +4,7 @@
     @extend .total-spent;
     .room-search-date{
     @include input()
+    width:12em;
     }
     .search-room-button{
       font-size: 1em;
