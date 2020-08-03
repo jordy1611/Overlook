@@ -9,7 +9,7 @@
       <h1 tabindex=0 class="header-text">Overlook Hotel</h1>
       <h2 tabindex=0 class="header-prompt">Welcome!  Please Login</h2>
     </header>
-    <form tabindex=0 class="login-form hidden">
+    <form tabindex=0 class="login-form">
       <h3>Login</h3>
       <p>UserName</p>
       <input class="username-input"></input>
@@ -56,51 +56,68 @@
         <span class="rooms-booked">xx</span>% of rooms booked today</p>
       <section class="search-customers">
         <p>Search Customers</p>
-        <button class="search-customers-button">Search Customers</button>
+        <p>Customer Name</p>
+        <input type="text" class="search-customer-input"></input>
+        <button class="search-customers-button">Search Customer</button>
       </section>
       <section class="bookings-today">
         <h3>Today's Bookings</h3>
       </section>
     </section>
-    <section class="manager-customer-view-dashboard">
+    <section class="manager-customer-view-dashboard hidden">
       <section class="manager-customer-view"></br>
         <p class="customer-info">Customer Name $$$$$$ Spent</p>
         <p class="add-booking-text">Add Customer Booking<p>
-        <form>
-          <input type="date" name="date" class="manager-room-search-date"></input>
-          <div><p>room#</p><input class="room-number-input" type="number" min="0" max="25"></input></div>
-          <button class="book-customer-room-button" aria-label="Book customer room" alt="book customer room button">Book Room</button>
-        </form>
+        <input type="date" name="date" class="manager-room-search-date"></input>
+        <button class="book-customer-room-button" aria-label="Book customer room" alt="book customer room button">View Rooms</button>
+      </section>
+      <section class="return-customer-manager-page hidden">
+        <p>Return to customer bookings</p>
+        <button class="return-customer-manager-page-button">Return</button>
       </section>
       <section class="return-manager-dashboard">
         <p>Return to manager page</p>
         <button class="return-manager-page-button">Return</button>
       </section>
-      <section class="manager-user-bookings">
-        <h3>Customer Bookings</h3>
-        <article class="booking">
-          <p tabindex=0><span class="booking-date">Date: 2020/20/20</span></p>
-          <p tabindex=0><span class="booking-room">Room Number: 20</span></p>
-          <p tabindex=0><span class="booking-cost">Cost: $2020</span></p>
-          <button class="delete-booking-button" aria-label="Delete this booking" alt="delete booking button">Delete</button>
+      <section class="manager-user-bookings hidden">
+      </section>
+      <section tabindex=0 class="manager-available-rooms hidden">
+        <h3>Available Rooms</h3>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">residential suite</p>
+          <p class="bed-size">bed size: gueen</p>
+          <p class="num-beds">beds: 1</p>
+          <p class="bidet">no bidet</p>
+          <p class="room-number">room# 26</p>
+          <p class="cost">$750.50</p>
         </article>
-        <article class="booking">
-          <p tabindex=0><span class="booking-date">Date: 2020/20/20</span></p>
-          <p tabindex=0><span class="booking-room">Room Number: 20</span></p>
-          <p tabindex=0><span class="booking-cost">Cost: $2020</span></p>
-          <button class="delete-booking-button" aria-label="Delete this booking" alt="delete booking button">Delete</button>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">residential suite</p>
+          <p class="bed-size">bed size: gueen</p>
+          <p class="num-beds">beds: 1</p>
+          <p class="bidet">no bidet</p>
+          <p class="room-number">room# 26</p>
+          <p class="cost">$750.50</p>
         </article>
-        <article class="booking">
-          <p tabindex=0><span class="booking-date">Date: 2020/20/20</span></p>
-          <p tabindex=0><span class="booking-room">Room Number: 20</span></p>
-          <p tabindex=0><span class="booking-cost">Cost: $2020</span></p>
-          <button class="delete-booking-button" aria-label="Delete this booking" alt="delete booking button">Delete</button>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">residential suite</p>
+          <p class="bed-size">bed size: gueen</p>
+          <p class="num-beds">beds: 1</p>
+          <p class="bidet">no bidet</p>
+          <p class="room-number">room# 26</p>
+          <p class="cost">$750.50</p>
         </article>
-        <article class="booking">
-          <p tabindex=0><span class="booking-date">Date: 2020/20/20</span></p>
-          <p tabindex=0><span class="booking-room">Room Number: 20</span></p>
-          <p tabindex=0><span class="booking-cost">Cost: $2020</span></p>
-          <button class="delete-booking-button" aria-label="Delete this booking" alt="delete booking button">Delete</button>
+        <article class="room">
+          <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+          <p class="room-type">residential suite</p>
+          <p class="bed-size">bed size: gueen</p>
+          <p class="num-beds">beds: 1</p>
+          <p class="bidet">no bidet</p>
+          <p class="room-number">room# 26</p>
+          <p class="cost">$750.50</p>
         </article>
       </section>
     </section>

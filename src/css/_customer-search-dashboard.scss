@@ -49,7 +49,7 @@
     @extend .my-bookings;
     .room{ //doesn't hide
       @extend .booking;
-      height: 2.5em;
+      // height: 2.5em;
       .book-button{
         font-size: 1.1em;
         font-weight: bold;
