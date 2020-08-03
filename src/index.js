@@ -32,7 +32,7 @@ let hasAllDataLoaded = false
 let hasBookingDataLoaded = false
 let mostRecentDate;
 let todayDate = new Date()
-todayDate = todayDate.getFullYear()+'/'+(todayDate.getMonth()+1)+'/'+todayDate.getDate();
+todayDate = todayDate.getFullYear()+'/0'+(todayDate.getMonth()+1)+'/0'+todayDate.getDate();
 
 fetchAllData()
   .then((data) => {
@@ -429,22 +429,16 @@ function displayRoomSearch() {
 
 function removeBooking(event) {
   const bookingID = event.target.closest('.booking').dataset.id
-  console.log(bookingID)
   const bookingToDelete = hotelData.bookings.bookings.find(booking => {
     return booking.id === parseInt(bookingID)
   })
-  const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
-   // console.log(hotelData.bookings.bookings)
-   hotelData.bookings.bookings.splice(index, 1)
-   deleteBookingFetch(bookingToDelete)
-   // console.log(hotelData.bookings.bookings)
-  // console.log(bookingToDeleteIndex)
-  // console.log(hotelData.bookings.bookings)
-  // console.log(bookingToDelete)
-  // const booking = hoteData.bookings.bookings.find(booking => booking.)
-  // const bookingIndex =
-  // hotelData.bookings.bookings.unshift(new Booking(booking))
-  // postNewBooking(booking)
+  if (bookingToDelete.date >= todayDate) {
+    const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
+     hotelData.bookings.bookings.splice(index, 1)
+     deleteBookingFetch(bookingToDelete)
+     alert('Booking Deleted')
+
+  }
 }
 
 function sortBookingsByDate(bookings) {
