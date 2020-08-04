@@ -9,14 +9,14 @@
       <h1 tabindex=0 class="header-text">Overlook Hotel</h1>
       <h2 tabindex=0 class="header-prompt">Welcome!  Please Login</h2>
     </header>
-    <form tabindex=0 class="login-form">
+    <section tabindex=0 class="login-form">
       <h3>Login</h3>
-      <p>UserName</p>
-      <input class="username-input"></input>
-      <p>Password</p>
-      <input class="password-input" type="password"></input>
+      <label for="username-input">User Name</label>
+      <input type="text" name="user name" class="username-input" id="username-input"></input>
+      <label for="password-input">Password</label>
+      <input type="password" name="password" class="password-input" id="password-input"></input>
       <button class="login-button" aria-label="Log in as user button" alt="Log in as user button">Login</button>
-    </form>
+    </section>
     <section tabindex=0 class="customer-dashboard hidden">
       <p class="total-spent"></br>
         Congratulations!</br></br>
