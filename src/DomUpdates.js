@@ -97,6 +97,11 @@ displayCustomerSearch(user, hotelRooms, hotelBookings) {
   }
 },
 
+filterRoomsByType(roomType, user, hotelRooms, hotelBookings) {
+  const allRooms = user.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
+  const filteredRooms = allRooms.filter(room => room.roomType === roomType)
+  domUpdates.displayRooms('available-rooms', filteredRooms)
+},
 
 }
 

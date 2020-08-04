@@ -264,65 +264,65 @@ function getAvailableRoomsByDate(date) {
   return availableRooms
 }
 
-function displayCustomerSearch() {
-  searchDate = document.querySelector('.room-search-date').value
-  searchDate = searchDate.replace(/-/g, '/')
-  if(searchDate.length === 10) {
-    const roomsOnDate = filterRoomsByDate(searchDate)
-    if(roomsOnDate.length > 0) {
-      displayElement('room-filter-buttons') //here down is good
-      displayElement('available-rooms')
-      displayRooms('available-rooms', roomsOnDate)
-    } else {
-      const alertMessage = `We are so sorry to inform you that the OverLook hotel is entirely booked on ${searchDate}.
-      We greatly appreciate your patience and apologize for the inconvenience.
-      You can call the front desk at 1-800-123-3456 to be placed on a wait list for the date of ${searchDate}.
-      Please look at another date to book a room.
-      Thank you!`
-      alert(`${alertMessage}`)
-    }
-  }
-}
+// function displayCustomerSearch() {
+//   searchDate = document.querySelector('.room-search-date').value
+//   searchDate = searchDate.replace(/-/g, '/')
+//   if(searchDate.length === 10) {
+//     const roomsOnDate = filterRoomsByDate(searchDate)
+//     if(roomsOnDate.length > 0) {
+//       displayElement('room-filter-buttons') //here down is good
+//       displayElement('available-rooms')
+//       displayRooms('available-rooms', roomsOnDate)
+//     } else {
+//       const alertMessage = `We are so sorry to inform you that the OverLook hotel is entirely booked on ${searchDate}.
+//       We greatly appreciate your patience and apologize for the inconvenience.
+//       You can call the front desk at 1-800-123-3456 to be placed on a wait list for the date of ${searchDate}.
+//       Please look at another date to book a room.
+//       Thank you!`
+//       alert(`${alertMessage}`)
+//     }
+//   }
+// }
 
-function displayRooms(className, rooms) { // can get rid of
-  const availableRooms = document.querySelector(`.${className}`);
-  availableRooms.innerHTML = '<h3>Available Rooms</h3>'
-  rooms.forEach(room => {
-    const bidet = room.bidet ? 'Bidet' : 'No Bidet'
-    const singleRoom = `
-    <article class="room" data-id="${room.number}">
-      <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
-      <p class="room-type">${room.roomType}</p>
-      <p class="bed-size">bed size: ${room.bedSize}</p>
-      <p class="num-beds">beds: ${room.numBeds}</p>
-      <p class="bidet">${bidet}</p>
-      <p class="room-number">room# ${room.number}</p>
-      <p class="cost">$${room.costPerNight}</p>
-    </article>
-    `
-    availableRooms.insertAdjacentHTML('beforeEnd', singleRoom)
-  })
-}
+// function displayRooms(className, rooms) { // can get rid of
+//   const availableRooms = document.querySelector(`.${className}`);
+//   availableRooms.innerHTML = '<h3>Available Rooms</h3>'
+//   rooms.forEach(room => {
+//     const bidet = room.bidet ? 'Bidet' : 'No Bidet'
+//     const singleRoom = `
+//     <article class="room" data-id="${room.number}">
+//       <button class="book-button" aria-label="Book this room" alt="Book this room button">Book!</button>
+//       <p class="room-type">${room.roomType}</p>
+//       <p class="bed-size">bed size: ${room.bedSize}</p>
+//       <p class="num-beds">beds: ${room.numBeds}</p>
+//       <p class="bidet">${bidet}</p>
+//       <p class="room-number">room# ${room.number}</p>
+//       <p class="cost">$${room.costPerNight}</p>
+//     </article>
+//     `
+//     availableRooms.insertAdjacentHTML('beforeEnd', singleRoom)
+//   })
+// }
 
 function searchRoomsByType() {
   if (event.target.classList.contains('all-rooms-button')) {
-    displayCustomerSearch()
+    domUpdates.displayCustomerSearch(currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('residential-suite-button')) {
-    filterRoomsByType('residential suite')
+    domUpdates.filterRoomsByType('residential suite', currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('junior-suite-button')) {
-    filterRoomsByType('junior suite')
+    domUpdates.filterRoomsByType('junior suite', currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('suite-button')) {
-    filterRoomsByType('suite')
+    domUpdates.filterRoomsByType('suite', currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('single-room-button')) {
-    filterRoomsByType('single room')
+    domUpdates.filterRoomsByType('single room', currentUser, hotelData.rooms, hotelData.bookings)
   }
 }
 
-function filterRoomsByType(roomType) {
-  const allRooms = filterRoomsByDate(searchDate)
-  const filteredRooms = allRooms.filter(room => room.roomType === roomType)
-  displayRooms('available-rooms', filteredRooms)
-}
+// function filterRoomsByType(roomType) {
+//   const allRooms = currentUser.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
+//   const filteredRooms = allRooms.filter(room => room.roomType === roomType)
+//   domUpdates.displayRooms('available-rooms', filteredRooms)
+// }
 
 function bookRoom(event) {
   const roomNumber = event.target.closest('.room').dataset.id
@@ -381,10 +381,10 @@ function getSearchedCustomer() {
 function displayRoomSearch() {
   searchDate = document.querySelector('.manager-room-search-date').value
   searchDate = searchDate.replace(/-/g, '/')
-  const roomsOnDate = filterRoomsByDate(searchDate)
+  const roomsOnDate = filterRoomsByDate(searchDate) // currentCustomer.getAv
   displayElement('manager-available-rooms')
   hideElement('manager-user-bookings')
-  displayRooms('manager-available-rooms', roomsOnDate)
+  domUpdates.displayRooms('manager-available-rooms', roomsOnDate)
 }
 
 function removeBooking(event) {
