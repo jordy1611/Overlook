@@ -11,9 +11,24 @@
     width: 13em;
     height: 7em;
     background-color:grey;
-    border: solid .1em;
+    border: solid .2em;
     border-radius: .75em 3em;
     padding: 1em;
+    background-color: #1f1f1f;
+    color: #dbdbdb;
+}
+
+@mixin button() {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1em;
+  align-self: center;
+  height: 4em;
+  width: 10em;
+  color: #dbdbdb;
+  border: solid .1em #dbdbdb;
+  background-color: #121212;
+  border-radius: .3em;
 }
 
 @mixin input() {

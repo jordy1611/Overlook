@@ -111,12 +111,10 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   // loginUser(userName, password)
-  // if (userName === 'manager' && password === 'overlook2020') {
-  if (userName === 'manager') {
+  if (userName === 'manager' && password === 'overlook2020') {
     loginAsManager()
     displayUserPage()
-  // } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number') { //helper function for criteria? May need typeof === 'number'
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8)))
     displayUserPage()
   } else {

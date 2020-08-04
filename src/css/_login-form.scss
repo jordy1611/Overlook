@@ -1,21 +1,22 @@
 .login-form {
-  background-color: grey;
+  background-color: #1f1f1f;
   @include loginSizing(60%, 30em, 20%, 10%)
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-content: center;
   text-align: left;
-  border: 1em solid;
+  border: 1em solid #dbdbdb;
   border-radius: 5em 10em;
   h3{
     text-align: center;
     font-size: 2em;
     margin-top: .5em;
     padding-bottom: 1em;
-    border-bottom: .2em solid;
+    border-bottom: .2em solid #dbdbdb;
     width: 100%;
     font-weight: bold;
+    color: #dbdbdb;
   }
   label {
     font-size: 1.75em;
@@ -23,6 +24,7 @@
     margin-top: -1em;
     max-width: 10em;
     font-weight: bold;
+    color: #dbdbdb;
   }
   input{
     font-size: 1.9em;
@@ -38,6 +40,6 @@
     height: 2em;
     // margin-left: 30%;
     margin-top: -1em;
-    border: .1em solid
+    border: .1em solid #dbdbdb;
   }
 }

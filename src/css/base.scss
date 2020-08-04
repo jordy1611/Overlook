@@ -19,22 +19,28 @@
   padding: 0
 }
 
+body {
+    background-image: url('../images/black-white-background-medium.jpg');
+}
+
 header {
   height: auto;
   display: flex;
   justify-content: space-between;
-  background-color: grey;
-  border-bottom: solid .5em;
+  background-color: #121212;
+  border-bottom: solid .5em #dbdbdb;
   h1 {
     font-size: 5em;
     font-weight: bold;
     align-self: center;
     margin-left: 3%;
+    color: #dbdbdb;
   }
   h2 {
     font-size: 3em;
     align-self: flex-end;
     margin-bottom: .7%;
+    color: #dbdbdb;
   }
 }
 
