@@ -90,7 +90,7 @@ function clickHandler(event) { // divide
     displayCustomerPage();
     domUpdates.hideCustomerSearchPage();
   } else if(event.target.classList.contains('search-room-button')) {
-    displaySearchDom()
+    domUpdates.displayCustomerSearch(currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.closest('.room-filter-buttons')) {
     searchRoomsByType(event)
   } else if(event.target.classList.contains('book-button')) {
@@ -170,7 +170,7 @@ function displayTodayStats(bookingsToday) {
   document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelData.rooms.allRooms.length).toFixed(2);
 }
 
-function displayCustomerPage() {
+function displayCustomerPage() { ///GOOD
   fetchAllBookingData()
     .then(data => {
       hotelData.bookings = data
@@ -243,17 +243,17 @@ function hideElement(className) {
   document.querySelector(`.${className}`).classList.add('hidden')
 }
 
-function filterRoomsByDate(searchDate) {
+function filterRoomsByDate(searchDate) { //going away
   let allRoomsAvailable
   if(searchDate.length === 10) {
     searchDate = searchDate.replace(/-/g, '/')
-    allRoomsAvailable = getAvailableRooms(searchDate)
+    allRoomsAvailable = getAvailableRoomsByDate(searchDate)
     return allRoomsAvailable
   }
 }
 
 
-function getAvailableRooms(date) {
+function getAvailableRoomsByDate(date) {
   let dayBookings = bookingsByDate(date)
   let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
   dayBookings.forEach(booking => {
@@ -264,13 +264,13 @@ function getAvailableRooms(date) {
   return availableRooms
 }
 
-function displaySearchDom() {
+function displayCustomerSearch() {
   searchDate = document.querySelector('.room-search-date').value
   searchDate = searchDate.replace(/-/g, '/')
   if(searchDate.length === 10) {
     const roomsOnDate = filterRoomsByDate(searchDate)
     if(roomsOnDate.length > 0) {
-      displayElement('room-filter-buttons')
+      displayElement('room-filter-buttons') //here down is good
       displayElement('available-rooms')
       displayRooms('available-rooms', roomsOnDate)
     } else {
@@ -284,7 +284,7 @@ function displaySearchDom() {
   }
 }
 
-function displayRooms(className, rooms) {
+function displayRooms(className, rooms) { // can get rid of
   const availableRooms = document.querySelector(`.${className}`);
   availableRooms.innerHTML = '<h3>Available Rooms</h3>'
   rooms.forEach(room => {
@@ -306,7 +306,7 @@ function displayRooms(className, rooms) {
 
 function searchRoomsByType() {
   if (event.target.classList.contains('all-rooms-button')) {
-    displaySearchDom()
+    displayCustomerSearch()
   } else if(event.target.classList.contains('residential-suite-button')) {
     filterRoomsByType('residential suite')
   } else if(event.target.classList.contains('junior-suite-button')) {

@@ -21,9 +21,17 @@ class User {
     })
     return bookingsCost;
   }
-
-
+  getAvailableRoomsByDate(date, hotelRooms, hotelBookings) { //NO TEST YET
+    let dayBookings = hotelBookings.getBookingsByDate(date)
+    // let availableRooms = hotelData.rooms.allRooms.map(room => room)
+    let availableRooms = hotelRooms.allRooms.map(room => room)
+    dayBookings.forEach(booking => {
+      availableRooms = availableRooms.filter(room => {
+        return room.number !== booking.roomNumber
+      })
+    })
+    return availableRooms
+  }
 }
-
 
 export default User;
