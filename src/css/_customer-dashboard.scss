@@ -5,8 +5,8 @@
   width: 100%;
   margin-top: 3%;
   .total-spent{
-
-    @include userCards()
+    //// card on top left that displays total spent by customer
+    @include userCards();
     text-align: center;
     line-height: 1.1em;
     span{
@@ -14,7 +14,8 @@
     }
   }
   .book-room{
-    @include userCards()
+    //// card on top right which opens customer search window
+    @include userCards();
     display: flex;
     flex-direction: column;
     p{
@@ -37,6 +38,7 @@
   }
 
   .my-bookings{
+    //// displays all customers bookings at bottom of screen
     display: flex;
     flex-direction: column;
     width: 85%;

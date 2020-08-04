@@ -1,6 +1,7 @@
 .customer-search-dashboard{
   @extend .customer-dashboard;
   .select-a-date{
+    //// card on top left that allows customer to view rooms on date
     @extend .total-spent;
     .room-search-date{
     @include input()
@@ -13,6 +14,7 @@
     }
   }
   .return-customer-dashboard{
+    //// card on top right that allows customer to return to previous page
     @extend .book-room;
     .return-customer-page-button{
       @extend .book-room-button;
@@ -20,6 +22,7 @@
 
   }
   .room-filter-buttons{
+    //// display of buttons middle of screen
     background-color: #1f1f1f;
     width: 85%;
     height: 5em;
@@ -35,7 +38,8 @@
         border: solid .3em #dbdbdb;
     }
   }
-  .available-rooms{ //doesn't hide
+  .available-rooms{
+    //// list of available rooms at button of screen
     @extend .my-bookings;
     .room{
       @extend .booking;

@@ -1,6 +1,7 @@
 .manager-customer-view-dashboard{
   @extend .customer-dashboard;
   .manager-customer-view{
+    //// card on top left which allows manager to search rooms on date
     @extend .total-spent;
     .customer-info{
       font-size: 1em;
@@ -19,6 +20,7 @@
       }
   };
   .return-customer-manager-page{
+    //// card on top right which returns to previous page
     @extend .total-spent;
     p{
       margin-top: 1em;
@@ -36,6 +38,7 @@
   }
 
   .manager-user-bookings{
+    //// display at bottom of screen on load, displays all the customer's bookings
     @extend .my-bookings;
     .booking{
       .delete-booking-button{
@@ -45,6 +48,8 @@
     }
   }
   .manager-available-rooms{
+    //// displays at bottom of screen when search rooms is pressed, displays available
+    //// 
     @extend .my-bookings;
       .room{
         @extend .booking;
