@@ -5,7 +5,8 @@
   width: 100%;
   margin-top: 3%;
   .total-spent{
-    @include userCards()
+    //// card on top left that displays total spent by customer
+    @include userCards();
     text-align: center;
     line-height: 1.1em;
     span{
@@ -13,7 +14,8 @@
     }
   }
   .book-room{
-    @include userCards()
+    //// card on top right which opens customer search window
+    @include userCards();
     display: flex;
     flex-direction: column;
     p{
@@ -31,15 +33,18 @@
       width: 10em;
       border: solid .1em;
       border-radius: .3em;
+      @include button();
     }
   }
 
   .my-bookings{
+    //// displays all customers bookings at bottom of screen
     display: flex;
     flex-direction: column;
     width: 85%;
-    background-color:grey;
-    border: solid .2em;
+    background-color: #1f1f1f;
+    color: #dbdbdb;
+    border: solid .4em;
     padding-bottom: .5em;
     border-radius: 1em 4em;
     padding-bottom: 3em;
@@ -54,16 +59,13 @@
       font-size: 1.2em;
       font-weight: bold;
       margin-top: .5em;
-      // margin-left: 1%;
-      // margin-right: 1%;
-      background-color: white;
-      border: solid .2em;
+      background-color: #1f1f1f;
+      border: solid .2em #dbdbdb;
       border-radius: .2em;
       .booking-date,
       .booking-room,
       .booking-cost {
-        background-color: grey;
-        color: white;
+        color: #dbdbdb;
         padding: 0 .1em 0 .1em
       }
     }

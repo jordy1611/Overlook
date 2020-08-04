@@ -1,9 +1,11 @@
 .manager-dashboard{
   @extend .customer-dashboard;
   .today-stats{
+    //// card on top right which displays hotel's daily stats
     @extend .total-spent;
   }
   .search-customers{
+    //// card on top right which allows manager to search customers
     @extend .book-room;
     p{
       margin: .5em 0 0 0;
@@ -12,7 +14,6 @@
       @include input();
       align-self: center;
       margin-top: .2em;
-      // border: solid;
     }
     .search-customers-button{
       @extend .book-room-button;
@@ -21,17 +22,12 @@
     }
   }
   .bookings-today{
+    //// list of hotel bookings for current day at bottom of screen
     @extend .my-bookings;
     .booking{
       .delete-booking-button{
-        font-size: 1em;
-        font-weight: bold;
-        width: 13em;
+        @include button()
         height: 1.7em;
-        margin-left: .5em;
-        margin-right: 1em;
-        border: solid .2em;
-        border-radius: .1em;
       }
     }
   }
