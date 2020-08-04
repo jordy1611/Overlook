@@ -1,16 +1,11 @@
 import './css/base.scss';
-import './css/style.scss';
-// import './images/person walking on path.jpg';
-// import './images/The Rock.jpg';
 import User from './User';
 import Customer from './Customer'
 import AllCustomers from './AllCustomers';
-// import Room from './Room';
 import AllRooms from './AllRooms';
 import Booking from './Booking';
 import AllBookings from './AllBookings';
 import Manager from './Manager';
-// import loginUser from './loginUser'
 import deleteBookingFetch from './DeleteBooking';
 import domUpdates from './DomUpdates';
 import fetchAllData from './FetchAllData';
@@ -19,8 +14,6 @@ import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
 
-
-let searchDate
 let currentUser = new User()
 let currentCustomer
 const hotelData = {
@@ -50,21 +43,7 @@ fetchAllData()
     hotelData.bookings = new AllBookings(hotelData.bookings)
     hasAllDataLoaded = true;
     getMostRecentDate()
-    // onLoadTest()
   })
-  // .then(() => {onLoadTest()})
-
-
-// fetchAllBookingData()
-//   .then(data => {
-//     hotelData.bookings = data
-//   })
-//   .then(() => {hotelData.bookings = hotelData.bookings.map(booking => new Booking(booking))})
-//   .then(() => {
-//     hotelData.bookings = new AllBookings(hotelData.bookings)
-//     hasBookingDataLoaded = true
-//     console.log('ind booking fetch', hotelData.bookings)
-//   })
 
   function getMostRecentDate() {
     let sortedBookings = hotelData.bookings.bookings.sort((a, b) => {
@@ -82,7 +61,6 @@ window.addEventListener('click', clickHandler)
 
 function clickHandler(event) { // divide
   if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
-
     login();
   } else if(event.target.classList.contains('book-room-button')) {
     domUpdates.displayBookRoomPage();
@@ -93,11 +71,9 @@ function clickHandler(event) { // divide
     domUpdates.searchDate = getSearchDate('room-search-date')
     domUpdates.displayCustomerSearch(currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.closest('.room-filter-buttons')) {
-
     searchRoomsByType(event)
   } else if(event.target.classList.contains('book-button')) {
     bookRoom(event)
-    // displayCustomerPage()
   } else if(event.target.classList.contains('search-customers-button')) {
     displayManagerSearchPage()
   } else if(event.target.classList.contains('return-manager-page-button')) {
@@ -113,7 +89,6 @@ function clickHandler(event) { // divide
 function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
-  // loginUser(userName, password)
   if (userName === 'manager') {
     loginAsManager()
     displayUserPage()
@@ -156,20 +131,9 @@ function displayManagerPage() {
       console.log('ind booking fetch', hotelData.bookings)
     })
     .then(() => {
-      let bookingsToday = bookingsByDate(todayDate)
-      ////////
+      let bookingsToday = hotelData.bookings.getBookingsByDate(todayDate)
       domUpdates.displayManagerMainPage(currentUser, bookingsToday, hotelData.rooms)
     })
-}
-
-function bookingsByDate(date) {
-  return hotelData.bookings.getBookingsByDate(date)
-}
-
-function displayTodayStats(bookingsToday, hotelRooms) {
-  const totalToday = currentUser.getBookingsCost(bookingsToday, hotelRooms)
-  document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
-  document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelData.rooms.allRooms.length).toFixed(2);
 }
 
 function displayCustomerPage() {
@@ -183,64 +147,17 @@ function displayCustomerPage() {
       hasBookingDataLoaded = true
     })
     .then(() => {
-      let customerBookings = getCustomerBookings(currentUser)
+      let customerBookings = hotelData.bookings.getBookingsByUser(currentUser.id)
       customerBookings = sortBookingsByDate(customerBookings)
       const customerTotal = getCustomerTotalSpent(currentUser, customerBookings)
       domUpdates.displayMainCustomerPage(customerBookings, customerTotal, hotelData.rooms.allRooms)
     })
 }
 
-function getCustomerBookings(user) {
-  return hotelData.bookings.getBookingsByUser(user.id)
-}
-
-function displayBookingsManager(bookings, className) { // manager can't delete now
-  document.querySelector(`.${className}`).innerHTML = '<h3>Customer Bookings</h3>'
-  bookings.forEach(booking => {
-    let singleBooking = `
-      <article class="booking" data-id="${booking.id}">
-        <button class="delete-booking-button">Delete</button>
-        <p tabindex=0><span class="booking-userID">UserID: ${booking.userID}</span></p>
-        <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
-        <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
-        <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
-      </article>
-    `
-    document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
-  });
-}
-
-function displayCustomerBookings(bookings, className) { // manager can't delete now
-  document.querySelector('.my-bookings').innerHTML = '<h3>My Bookings</h3>'
-  bookings.forEach(booking => {
-    let singleBooking = `
-      <article class="booking" data-id="${booking.id}">
-        <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
-        <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
-        <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelData.rooms.allRooms)}</span></p>
-      </article>
-    `
-    document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
-  });
-}
-
-function displayUserCosts(customerBookings, customerTotal) {
-  document.querySelector('.customer-total').innerText = customerTotal;
-  document.querySelector('.customer-points').innerText = Math.floor(customerTotal * 100);
-}
-
 function getCustomerTotalSpent(customer, userBookings) {
   let customerTotal = customer.getBookingsCost(userBookings, hotelData.rooms)
   customerTotal = parseFloat(customerTotal.toFixed(2))
   return customerTotal
-}
-
-function displayElement(className) {
-  document.querySelector(`.${className}`).classList.remove('hidden')
-}
-
-function hideElement(className) {
-  document.querySelector(`.${className}`).classList.add('hidden')
 }
 
 function filterRoomsByDate(searchDate) { //going away
@@ -254,7 +171,7 @@ function filterRoomsByDate(searchDate) { //going away
 
 
 function getAvailableRoomsByDate(date) {
-  let dayBookings = bookingsByDate(date)
+  let dayBookings = hotelData.bookings.getBookingsByDate(date)
   let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
   dayBookings.forEach(booking => {
     availableRooms = availableRooms.filter(room => {
@@ -304,16 +221,11 @@ function displayManagerSearchPage() {
       .then(() => {
         let dateBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
         dateBookings = sortBookingsByDate(dateBookings)
-        const customerBookings = getCustomerBookings(currentCustomer)
+        const customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id)
         const totalSpent = getCustomerTotalSpent(currentCustomer, customerBookings)
-        ///////
         domUpdates.displayManagerSearchPage(dateBookings, currentCustomer, totalSpent, hotelData.rooms)
       })
   }
-}
-
-function displayUserSearchCard(currentCustomer) {
-  document.querySelector('.customer-info').innerText = `${currentCustomer.name} Total:$${totalSpent}`
 }
 
 function getSearchedCustomer() {
@@ -324,22 +236,12 @@ function getSearchedCustomer() {
   return searchCustomer || undefined
 }
 
-function displayRoomSearch() {
-  searchDate = document.querySelector('.manager-room-search-date').value
-  searchDate = searchDate.replace(/-/g, '/')
-  const roomsOnDate = filterRoomsByDate(searchDate) // currentCustomer.getAv
-  displayElement('manager-available-rooms')
-  hideElement('manager-user-bookings')
-  domUpdates.displayRooms('manager-available-rooms', roomsOnDate)
-}
-
 function removeBooking(event) {
   const bookingID = event.target.closest('.booking').dataset.id
   const bookingToDelete = hotelData.bookings.bookings.find(booking => {
     return booking.id === parseInt(bookingID)
   }) || null
   if (bookingToDelete !== null && bookingToDelete.date >= todayDate) {
-    console.log('DELETE')
     const index = hotelData.bookings.bookings.indexOf(bookingToDelete)
      hotelData.bookings.bookings.splice(index, 1)
      deleteBookingFetch(bookingToDelete)
@@ -361,6 +263,6 @@ function sortBookingsByDate(bookings) {
 }
 
 function getSearchDate(className) {
-  searchDate = document.querySelector(`.${className}`).value
+  let searchDate = document.querySelector(`.${className}`).value
   return searchDate.replace(/-/g, '/')
 }
