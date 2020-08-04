@@ -7,15 +7,6 @@ import sampleUserData from './sampleData/sampleUsers'
 // import BookingRepo from '../src/Booking-repo'
 // import Repo from '../src/Repo'
 import AllRooms from '../src/AllRooms'
-// import Room from '../src/Room'
-// import CustomerRepo from '../src/Customer-repo'
-// import Customer from '../src/Customer'
-// import TodayBookingRepo from '../src/TodayBooking-repo';
-// import UserBookingRepo from '../src/UserBooking-repo';
-// import User from '../src/User'
-// import Manager from '../src/Manager'
-
-//delete unused imports
 
 describe('AllRooms', () => {
 

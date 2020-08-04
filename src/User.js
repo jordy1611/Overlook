@@ -1,8 +1,3 @@
-/*Individual user
-properties => id & name imported, bookings =[], amount spent on rooms = 0
-methods => get bookings(current and present)? get total spent on rooms
-for the manager, return bookings and total amount spent
-parent user class to customer and manager*/
 class User {
   constructor(id = null, name = null) {
     this.id = id
@@ -14,16 +9,22 @@ class User {
   }
 
   getBookingsCost(bookings, rooms) {
-// might have issues with single bookinfg
     let bookingsCost = 0;
     bookings.forEach(booking => {
       bookingsCost += booking.getCost(rooms.allRooms)
     })
     return bookingsCost;
   }
-
-
+  getAvailableRoomsByDate(date, hotelRooms, hotelBookings) {  //not being tested
+    let dayBookings = hotelBookings.getBookingsByDate(date)
+    let availableRooms = hotelRooms.allRooms.map(room => room)
+    dayBookings.forEach(booking => {
+      availableRooms = availableRooms.filter(room => {
+        return room.number !== booking.roomNumber
+      })
+    })
+    return availableRooms
+  }
 }
-
 
 export default User;

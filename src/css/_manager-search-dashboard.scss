@@ -49,7 +49,7 @@
   }
   .manager-available-rooms{
     //// displays at bottom of screen when search rooms is pressed, displays available
-    //// 
+    //// rooms on date
     @extend .my-bookings;
       .room{
         @extend .booking;

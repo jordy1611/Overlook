@@ -17,7 +17,7 @@ import sampleUserData from './sampleData/sampleUsers'
 
 //delete unused imports
 
-describe('thisTest', () => {
+describe('index.js', () => {
 
   // before(() => {
   //
