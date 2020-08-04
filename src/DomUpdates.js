@@ -148,6 +148,15 @@ displayManagerSearchPage(dateBookings, customer, totalSpent, hotelRooms) {
   document.querySelector('.customer-info').innerText = `${customer.name} Total:$${totalSpent}`
 },
 
+displayManagerRoomSearch(customer, hotelRooms, hotelBookings) {
+  this.searchDate = document.querySelector('.manager-room-search-date').value
+  this.searchDate = this.searchDate.replace(/-/g, '/')
+  const roomsOnDate = customer.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
+  this.displayElement('manager-available-rooms')
+  this.hideElement('manager-user-bookings')
+  this.displayRooms('manager-available-rooms', roomsOnDate)
+},
+
 
 
 

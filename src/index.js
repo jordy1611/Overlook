@@ -101,7 +101,7 @@ function clickHandler(event) { // divide
   } else if(event.target.classList.contains('return-manager-page-button')) {
     displayManagerPage()
   } else if(event.target.classList.contains('book-customer-room-button')) {
-    displayRoomSearch()
+    domUpdates.displayManagerRoomSearch(currentCustomer, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('delete-booking-button')) {
     removeBooking(event)
   }
