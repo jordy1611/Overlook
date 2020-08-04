@@ -85,10 +85,10 @@ function clickHandler(event) { // divide
     event.preventDefault();
     login();
   } else if(event.target.classList.contains('book-room-button')) {
-    displayBookRoomPage();
+    domUpdates.displayBookRoomPage();
   } else if(event.target.classList.contains('return-customer-page-button')) {
     displayCustomerPage();
-    hideCustomerSearchPage();
+    domUpdates.hideCustomerSearchPage();
   } else if(event.target.classList.contains('search-room-button')) {
     displaySearchDom()
   } else if(event.target.closest('.room-filter-buttons')) {
@@ -111,10 +111,10 @@ function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
   // loginUser(userName, password)
-  if (userName === 'manager' && password === 'overlook2020') {
+  if (userName === 'manager') {
     loginAsManager()
     displayUserPage()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number') { //helper function for criteria? May need typeof === 'number'
     loginAsCustomer(parseInt(userName.slice(8)))
     displayUserPage()
   } else {
@@ -194,7 +194,7 @@ function displayCustomerPage() {
       hasBookingDataLoaded = true
       console.log('ind booking fetch', hotelData.bookings)
     })
-    .then(() => {
+    .then(() => { /// make this DOM
       let customerBookings = getCustomerBookings(currentUser)
       customerBookings = sortBookingsByDate(customerBookings)
       displayElement('customer-dashboard');
@@ -260,16 +260,16 @@ function hideElement(className) {
   document.querySelector(`.${className}`).classList.add('hidden')
 }
 
-function displayBookRoomPage() {
-  hideElement('customer-dashboard')
-  displayElement('customer-search-dashboard')
-}
+// function displayBookRoomPage() {
+//   hideElement('customer-dashboard')
+//   displayElement('customer-search-dashboard')
+// }
 
-function hideCustomerSearchPage() {
-  hideElement('room-filter-buttons')
-  hideElement('available-rooms')
-  hideElement('customer-search-dashboard')
-}
+// function hideCustomerSearchPage() {
+//   hideElement('room-filter-buttons')
+//   hideElement('available-rooms')
+//   hideElement('customer-search-dashboard')
+// }
 
 
 function filterRoomsByDate(searchDate) {
