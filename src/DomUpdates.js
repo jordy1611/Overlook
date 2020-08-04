@@ -111,7 +111,7 @@ displayTodayStats(user, bookingsToday, hotelRooms) {
   document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelRooms.allRooms.length).toFixed(2);
 },
 
-displayBookingsToday(bookings, className, hotelRooms) { // manager can't delete now
+displayBookingsManager(bookings, className, hotelRooms) { // manager can't delete now
   document.querySelector(`.${className}`).innerHTML = '<h3>Customer Bookings</h3>'
   bookings.forEach(booking => {
     let singleBooking = `
@@ -131,8 +131,26 @@ displayManagerMainPage(user, bookingsToday, hotelRooms) {
   this.displayElement('manager-dashboard')
   this.hideElement('manager-customer-view-dashboard')
   this.displayTodayStats(user, bookingsToday, hotelRooms)
-  this.displayBookingsToday(bookingsToday, 'bookings-today', hotelRooms)
+  this.displayBookingsManager(bookingsToday, 'bookings-today', hotelRooms)
 },
+
+// manager search dashboard
+
+displayManagerSearchPage(dateBookings, customer, totalSpent, hotelRooms) {
+  this.displayBookingsManager(dateBookings, 'manager-user-bookings', hotelRooms)
+  this.hideElement('manager-dashboard')
+  this.hideElement('return-customer-manager-page')
+  this.hideElement('manager-available-rooms')
+  this.displayElement('manager-customer-view-dashboard')
+  this.displayElement('manager-customer-view')
+  this.displayElement('return-manager-dashboard')
+  this.displayElement('manager-user-bookings')
+  document.querySelector('.customer-info').innerText = `${customer.name} Total:$${totalSpent}`
+},
+
+
+
+
 
 
 }

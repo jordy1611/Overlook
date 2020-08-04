@@ -299,25 +299,17 @@ function displayManagerSearchPage() {
         hasBookingDataLoaded = true
       })
       .then(() => {
-        let customerBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
-        customerBookings = sortBookingsByDate(customerBookings)
-
-        displayBookingsManager(customerBookings, 'manager-user-bookings')
-        hideElement('manager-dashboard')
-        hideElement('return-customer-manager-page')
-        hideElement('manager-available-rooms')
-        displayElement('manager-customer-view-dashboard')
-        displayElement('manager-customer-view')
-        displayElement('return-manager-dashboard')
-        displayElement('manager-user-bookings')
-        displayUserSearchCard(currentCustomer)
+        let dateBookings = hotelData.bookings.getBookingsByUser(currentCustomer.id) //turn into one function
+        dateBookings = sortBookingsByDate(dateBookings)
+        const customerBookings = getCustomerBookings(currentCustomer)
+        const totalSpent = getCustomerTotalSpent(currentCustomer, customerBookings)
+        ///////
+        domUpdates.displayManagerSearchPage(dateBookings, currentCustomer, totalSpent, hotelData.rooms)
       })
   }
 }
 
 function displayUserSearchCard(currentCustomer) {
-  const customerBookings = getCustomerBookings(currentCustomer)
-  let totalSpent = getCustomerTotalSpent(currentCustomer, customerBookings) //this should be a helper function
   document.querySelector('.customer-info').innerText = `${currentCustomer.name} Total:$${totalSpent}`
 }
 
