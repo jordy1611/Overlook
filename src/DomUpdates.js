@@ -78,8 +78,9 @@ hideCustomerSearchPage() {
 },
 
 displayCustomerSearch(user, hotelRooms, hotelBookings) {
-  this.searchDate = document.querySelector('.room-search-date').value
-  this.searchDate = this.searchDate.replace(/-/g, '/')
+  // this.searchDate = document.querySelector('.room-search-date').value
+  // this.searchDate = this.searchDate.replace(/-/g, '/')
+    console.log(this.searchDate)
   if(this.searchDate.length === 10) {
     const roomsOnDate = user.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
     if(roomsOnDate.length > 0) {
@@ -98,6 +99,7 @@ displayCustomerSearch(user, hotelRooms, hotelBookings) {
 },
 
 filterRoomsByType(roomType, user, hotelRooms, hotelBookings) {
+    console.log(this.searchDate)
   const allRooms = user.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
   const filteredRooms = allRooms.filter(room => room.roomType === roomType)
   domUpdates.displayRooms('available-rooms', filteredRooms)
@@ -149,8 +151,9 @@ displayManagerSearchPage(dateBookings, customer, totalSpent, hotelRooms) {
 },
 
 displayManagerRoomSearch(customer, hotelRooms, hotelBookings) {
-  this.searchDate = document.querySelector('.manager-room-search-date').value
-  this.searchDate = this.searchDate.replace(/-/g, '/')
+  // this.searchDate = document.querySelector('.manager-room-search-date').value
+  // this.searchDate = this.searchDate.replace(/-/g, '/')
+  console.log(this.searchDate)
   const roomsOnDate = customer.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
   this.displayElement('manager-available-rooms')
   this.hideElement('manager-user-bookings')

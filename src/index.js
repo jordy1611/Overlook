@@ -90,8 +90,10 @@ function clickHandler(event) { // divide
     displayCustomerPage();
     domUpdates.hideCustomerSearchPage();
   } else if(event.target.classList.contains('search-room-button')) {
+    domUpdates.searchDate = getSearchDate('room-search-date')
     domUpdates.displayCustomerSearch(currentUser, hotelData.rooms, hotelData.bookings)
   } else if(event.target.closest('.room-filter-buttons')) {
+
     searchRoomsByType(event)
   } else if(event.target.classList.contains('book-button')) {
     bookRoom(event)
@@ -101,6 +103,7 @@ function clickHandler(event) { // divide
   } else if(event.target.classList.contains('return-manager-page-button')) {
     displayManagerPage()
   } else if(event.target.classList.contains('book-customer-room-button')) {
+    domUpdates.searchDate = getSearchDate('manager-room-search-date')
     domUpdates.displayManagerRoomSearch(currentCustomer, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('delete-booking-button')) {
     removeBooking(event)
@@ -275,11 +278,11 @@ function searchRoomsByType() {
   }
 }
 
-function bookRoom(event) {
+function bookRoom(event, className) {
   const roomNumber = event.target.closest('.room').dataset.id
   const booking = {
     userID: currentCustomer.id,
-    date: searchDate,
+    date: '2020/11/16',  //getSearchDate(className)
     roomNumber: parseInt(roomNumber)
   }
   hotelData.bookings.bookings.unshift(new Booking(booking))
@@ -355,4 +358,9 @@ function sortBookingsByDate(bookings) {
     }
     return 0
   })
+}
+
+function getSearchDate(className) {
+  searchDate = document.querySelector(`.${className}`).value
+  return searchDate.replace(/-/g, '/')
 }
