@@ -9,10 +9,6 @@ class Customer extends User{
     super(id, name);
   }
 
-  // get cost of all bookings can be user method
-
-  // book
-
 }
 
 

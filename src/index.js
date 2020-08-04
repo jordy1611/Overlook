@@ -9,7 +9,6 @@ import Manager from './Manager';
 import deleteBookingFetch from './DeleteBooking';
 import domUpdates from './DomUpdates';
 import fetchAllData from './FetchAllData';
-import fetchAllCustomerData from './FetchAllCustomerData';
 import fetchAllBookingData from './FetchAllBookingData';
 import postNewBooking from './PostNewBooking';
 
@@ -61,7 +60,7 @@ window.addEventListener('click', clickHandler)
 document.querySelector('.customer-search-dashboard').addEventListener('click', customerSearchHandler)
 document.querySelector('.manager-customer-view-dashboard').addEventListener('click', managerSearchHandler)
 
-function clickHandler(event) { // divide
+function clickHandler(event) {
   if (event.target.classList.contains('login-button') && hasAllDataLoaded) {
     login();
   } else if(event.target.classList.contains('book-room-button')) {
@@ -182,7 +181,7 @@ function getCustomerTotalSpent(customer, userBookings) {
   return customerTotal
 }
 
-function filterRoomsByDate(searchDate) { //going away
+function filterRoomsByDate(searchDate) {
   let allRoomsAvailable
   if(searchDate.length === 10) {
     searchDate = searchDate.replace(/-/g, '/')
@@ -193,7 +192,7 @@ function filterRoomsByDate(searchDate) { //going away
 
 function getAvailableRoomsByDate(date) {
   let dayBookings = hotelData.bookings.getBookingsByDate(date)
-  let availableRooms = hotelData.rooms.allRooms.map(room => room) //push?
+  let availableRooms = hotelData.rooms.allRooms.map(room => room)
   dayBookings.forEach(booking => {
     availableRooms = availableRooms.filter(room => {
       return room.number !== booking.roomNumber
