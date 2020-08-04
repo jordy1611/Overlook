@@ -1,9 +1,20 @@
 let domUpdates = {
+
   // initial properties here,
 
 
 
   //methods here,
+  displayElement(className) {
+    document.querySelector(`.${className}`).classList.remove('hidden')
+  },
+
+  hideElement(className) {
+    document.querySelector(`.${className}`).classList.add('hidden')
+  },
+
+
+  /// customer main display
   displayBookRoomPage() {
     this.hideElement('customer-dashboard')
     this.displayElement('customer-search-dashboard')
@@ -15,16 +26,33 @@ let domUpdates = {
     this.hideElement('customer-search-dashboard')
   },
 
-
-  displayElement(className) {
-    document.querySelector(`.${className}`).classList.remove('hidden')
+  displayCustomerBookings(bookings, className, hotelRooms) { // manager can't delete now
+    document.querySelector('.my-bookings').innerHTML = '<h3>My Bookings</h3>'
+    bookings.forEach(booking => {
+      let singleBooking = `
+        <article class="booking" data-id="${booking.id}">
+          <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
+          <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
+          <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelRooms)}</span></p>
+        </article>
+      `
+      document.querySelector('.my-bookings').insertAdjacentHTML('beforeEnd', singleBooking)
+    });
   },
 
-  hideElement(className) {
-    document.querySelector(`.${className}`).classList.add('hidden')
+  displayCustomerCosts(customerBookings, customerTotal) {
+    document.querySelector('.customer-total').innerText = customerTotal;
+    document.querySelector('.customer-points').innerText = Math.floor(customerTotal * 100);
   },
 
-
+  displayMainCustomerPage(customerBookings, customerTotal, hotelRooms) {
+    this.displayElement('customer-dashboard');
+    this.displayCustomerBookings(customerBookings, 'my-bookings', hotelRooms);
+    this.displayCustomerCosts(customerBookings, customerTotal);
+    this.hideElement('room-filter-buttons')
+    this.hideElement('available-rooms')
+    this.hideElement('customer-search-dashboard')
+  },
 
 
 }

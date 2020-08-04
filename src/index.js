@@ -121,19 +121,6 @@ function login() {
     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
   }
 }
-//combine these 2?
-//
-// function loginUser(userName, password) {
-//   if (userName === 'manager' && password === 'overlook2020') {
-//     loginAsManager()
-//     displayUserPage()
-//   } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { //helper function for criteria? May need typeof === 'number'
-//     loginAsCustomer(parseInt(userName.slice(8)))
-//     displayUserPage()
-//   } else {
-//     alert('We are terribley sorry to tell you that either the username or password entered is incorrect.')
-//   }
-// }
 
 function loginAsManager() {
   currentUser = new Manager()
@@ -145,7 +132,7 @@ function loginAsCustomer(id) {
 }
 
 function displayUserPage() {
-  hideElement('login-form')
+  domUpdates.hideElement('login-form')
   document.querySelector('.header-prompt').innerText = `Welcome ${currentUser.getFirstName()}!`
   if (currentUser instanceof Manager) {
     displayManagerPage()
@@ -192,17 +179,14 @@ function displayCustomerPage() {
     .then(() => {
       hotelData.bookings = new AllBookings(hotelData.bookings)
       hasBookingDataLoaded = true
-      console.log('ind booking fetch', hotelData.bookings)
     })
     .then(() => { /// make this DOM
       let customerBookings = getCustomerBookings(currentUser)
       customerBookings = sortBookingsByDate(customerBookings)
-      displayElement('customer-dashboard');
-      displayCustomerBookings(customerBookings, 'my-bookings');
-      displayUserCosts(customerBookings);
-      hideElement('room-filter-buttons')
-      hideElement('available-rooms')
-      hideElement('customer-search-dashboard')
+      const customerTotal = getCustomerTotalSpent(currentUser, customerBookings)
+      ////
+      domUpdates.displayMainCustomerPage(customerBookings, customerTotal, hotelData.rooms.allRooms)
+      ////
     })
 }
 
@@ -240,8 +224,7 @@ function displayCustomerBookings(bookings, className) { // manager can't delete 
   });
 }
 
-function displayUserCosts(customerBookings) {
-  const customerTotal = getCustomerTotalSpent(currentUser, customerBookings)
+function displayUserCosts(customerBookings, customerTotal) {
   document.querySelector('.customer-total').innerText = customerTotal;
   document.querySelector('.customer-points').innerText = Math.floor(customerTotal * 100);
 }
@@ -259,18 +242,6 @@ function displayElement(className) {
 function hideElement(className) {
   document.querySelector(`.${className}`).classList.add('hidden')
 }
-
-// function displayBookRoomPage() {
-//   hideElement('customer-dashboard')
-//   displayElement('customer-search-dashboard')
-// }
-
-// function hideCustomerSearchPage() {
-//   hideElement('room-filter-buttons')
-//   hideElement('available-rooms')
-//   hideElement('customer-search-dashboard')
-// }
-
 
 function filterRoomsByDate(searchDate) {
   let allRoomsAvailable
