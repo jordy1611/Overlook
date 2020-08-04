@@ -103,6 +103,38 @@ filterRoomsByType(roomType, user, hotelRooms, hotelBookings) {
   domUpdates.displayRooms('available-rooms', filteredRooms)
 },
 
+/// manager dashboard
+
+displayTodayStats(user, bookingsToday, hotelRooms) {
+  const totalToday = user.getBookingsCost(bookingsToday, hotelRooms)
+  document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
+  document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelRooms.allRooms.length).toFixed(2);
+},
+
+displayBookingsToday(bookings, className, hotelRooms) { // manager can't delete now
+  document.querySelector(`.${className}`).innerHTML = '<h3>Customer Bookings</h3>'
+  bookings.forEach(booking => {
+    let singleBooking = `
+      <article class="booking" data-id="${booking.id}">
+        <button class="delete-booking-button">Delete</button>
+        <p tabindex=0><span class="booking-userID">UserID: ${booking.userID}</span></p>
+        <p tabindex=0><span class="booking-date">Date: ${booking.date}</span></p>
+        <p tabindex=0><span class="booking-room">Room Number: ${booking.roomNumber}</span></p>
+        <p tabindex=0><span class="booking-cost">Cost: ${booking.getCost(hotelRooms.allRooms)}</span></p>
+      </article>
+    `
+    document.querySelector(`.${className}`).insertAdjacentHTML('beforeEnd', singleBooking)
+  });
+},
+
+displayManagerMainPage(user, bookingsToday, hotelRooms) {
+  this.displayElement('manager-dashboard')
+  this.hideElement('manager-customer-view-dashboard')
+  this.displayTodayStats(user, bookingsToday, hotelRooms)
+  this.displayBookingsToday(bookingsToday, 'bookings-today', hotelRooms)
+},
+
+
 }
 
 export default domUpdates;
