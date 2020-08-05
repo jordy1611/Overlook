@@ -100,10 +100,11 @@ function managerSearchHandler() {
 function login() {
   const userName = document.querySelector('.username-input').value
   const password = document.querySelector('.password-input').value
-  if (userName === 'manager') {
+  if (userName === 'manager' && password == 'overlook2020') {
     loginAsManager()
     displayUserPage()
-  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50 && typeof parseInt(userName.slice(8)) === 'number') { //helper function for criteria? May need typeof === 'number'
+  } else if (userName.slice(0, 8) === 'customer' && parseInt(userName.slice(8)) <= 50
+  && typeof parseInt(userName.slice(8)) === 'number' && password === 'overlook2020') { 
     loginAsCustomer(parseInt(userName.slice(8)))
     displayUserPage()
   } else {
