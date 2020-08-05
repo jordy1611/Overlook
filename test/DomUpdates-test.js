@@ -1,7 +1,6 @@
 const chai = require('chai');
 import { expect } from 'chai';
 import constSampleBookingData from './sampleData/constSampleBookings'
-import letSampleBookingData from './sampleData/letSampleBookings'
 import sampleRoomData from './sampleData/sampleRooms'
 import sampleUserData from './sampleData/sampleUsers'
 import domUpdates from '../src/domUpdates'
@@ -15,7 +14,7 @@ import domUpdates from '../src/domUpdates'
 const spies = require('chai-spies');
 chai.use(spies);
 
-describe.only('DOM Updates', () => {
+describe('DOM Updates', () => {
   let rooms, bookings, customerTotal, user;
   before(() => {
     rooms = sampleRoomData;

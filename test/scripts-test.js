@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import constSampleBookingData from './sampleData/constSampleBookings'
-import letSampleBookingData from './sampleData/letSampleBookings'
 import sampleRoomData from './sampleData/sampleRooms'
 import sampleUserData from './sampleData/sampleUsers'
 
