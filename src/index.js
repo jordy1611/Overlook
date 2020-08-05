@@ -82,7 +82,7 @@ function customerSearchHandler() {
   } else if(event.target.closest('.room-filter-buttons')) {
     searchRoomsByType(event)
   } else if(event.target.classList.contains('book-button')) {
-    bookRoom(event, 'room-search-date')
+    bookRoom(event, getSearchDate('room-search-date'))
   }
 }
 
@@ -93,7 +93,7 @@ function managerSearchHandler() {
     domUpdates.searchDate = getSearchDate('manager-room-search-date')
     domUpdates.displayManagerRoomSearch(currentCustomer, hotelData.rooms, hotelData.bookings)
   } else if(event.target.classList.contains('book-button')) {
-    bookRoom(event, 'manager-room-search-date')
+    bookRoom(event, getSearchDate('manager-room-search-date'))
   }
 }
 
@@ -245,16 +245,21 @@ function getSearchedCustomer() {
   return searchCustomer || undefined
 }
 
-function bookRoom(event, className) {
-  const roomNumber = event.target.closest('.room').dataset.id
-  const booking = {
-    userID: currentCustomer.id,
-    date: getSearchDate(className),
-    roomNumber: parseInt(roomNumber)
+// if (bookingToDelete !== null && bookingToDelete.date >= todayDate)
+function bookRoom(event, searchDate) {
+  if(searchDate >= todayDate) {
+    const roomNumber = event.target.closest('.room').dataset.id
+    const booking = {
+      userID: currentCustomer.id,
+      date: searchDate,
+      roomNumber: parseInt(roomNumber)
+    }
+    hotelData.bookings.bookings.unshift(new Booking(booking))
+    postNewBooking(booking)
+    alert('Congratulations! Room Booked!')
+  } else {
+    alert('Sorry! No Booking In The Past')
   }
-  hotelData.bookings.bookings.unshift(new Booking(booking))
-  postNewBooking(booking)
-  alert('Congratulations! Room Booked!')
 }
 
 function removeBooking(event) {
