@@ -24,26 +24,20 @@ describe.only('DOM Updates', () => {
   })
   beforeEach(() => {
     global.document = {};
-    chai.spy.on(domUpdates, "hideElement", () => {})
-    chai.spy.on(domUpdates, "displayElement", () => {})
-    chai.spy.on(domUpdates, "displayRooms", () => {})
-    chai.spy.on(domUpdates, "displayCustomerBookings", () => {})
-    chai.spy.on(domUpdates, "displayMainCustomerPage", () => {})
-    chai.spy.on(domUpdates, "displayCustomerCosts", () => {})
-    chai.spy.on(domUpdates, "displayBookRoomPage", () => {})
-    chai.spy.on(domUpdates, "hideCustomerSearchPage", () => {})
-    chai.spy.on(domUpdates, "displayCustomerSearch", () => {})
-    chai.spy.on(domUpdates, "filterRoomsByType", () => {})
-    chai.spy.on(domUpdates, "displayTodayStats", () => {})
-    chai.spy.on(domUpdates, "isplayBookingsManager", () => {})
-    chai.spy.on(domUpdates, "displayManagerMainPage", () => {})
-    chai.spy.on(domUpdates, "displayManagerSearchPage", () => {})
-    chai.spy.on(domUpdates, "displayManagerRoomSearch", () => {})
+    chai.spy.on(document, 'querySelector', () => {})
+    chai.spy.on(domUpdates, ['hideElement', 'displayElement', 'displayRooms',
+    'displayCustomerBookings', 'displayMainCustomerPage', 'displayCustomerCosts',
+    'displayBookRoomPage', 'hideCustomerSearchPage', 'displayCustomerSearch',
+    'filterRoomsByType', 'displayTodayStats', 'displayBookingsManager',
+    'displayManagerMainPage', 'displayManagerSearchPage',
+    'displayManagerRoomSearch'], () => {})
   })
 
   afterEach(() => {
-    chai.spy.restore(domUpdates);
+    chai.spy.restore(domUpdates)
+    chai.spy.restore(global.document)
   });
+
 
   it('should hide an element when called', () => {
     domUpdates.hideElement('room-filter-buttons')
@@ -105,18 +99,27 @@ describe.only('DOM Updates', () => {
     expect(domUpdates.displayTodayStats).to.have.been.called.with(user, bookings, rooms)
   })
 
-  it('should display all bookings for the manager when given an array of rooms, a class name and an array of bookings', () => {
+  it('should display the bookings for the manager when given an array of bookings, a class name and an array of rooms', () => {
     domUpdates.displayBookingsManager(bookings, 'bookings-today', rooms)
 
     expect(domUpdates.displayBookingsManager).to.have.been.called.with(bookings, 'bookings-today', rooms)
   })
 
-  it('should display the main manager page when given a user, an array of roomsand an array of bookings', () => {
+  it('should display the main manager page when given a user, an array of rooms and an array of bookings', () => {
     domUpdates.displayManagerMainPage(user, bookings, rooms)
 
     expect(domUpdates.displayManagerMainPage).to.have.been.called.with(user, bookings, rooms)
   })
 
+  it('should display the manager search page when given a user, an array of rooms, a total spent and an array of bookings', () => {
+    domUpdates.displayManagerSearchPage(bookings, user, customerTotal, rooms)
 
+    expect(domUpdates.displayManagerSearchPage).to.have.been.called.with(bookings, user, customerTotal, rooms)
+  })
 
+  it('should display the main manager page when given a user, an array of roomsand an array of bookings', () => {
+    domUpdates.displayManagerRoomSearch(user, rooms, bookings)
+
+    expect(domUpdates.displayManagerRoomSearch).to.have.been.called.with(user, rooms, bookings)
+  })
 })
