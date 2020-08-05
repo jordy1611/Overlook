@@ -99,6 +99,24 @@ describe.only('DOM Updates', () => {
     expect(domUpdates.filterRoomsByType).to.have.been.called.with('suite', user, rooms, bookings)
   })
 
+  it('should display the hotels daily stats when given a user, array of rooms and an array of bookings', () => {
+    domUpdates.displayTodayStats(user, bookings, rooms)
+
+    expect(domUpdates.displayTodayStats).to.have.been.called.with(user, bookings, rooms)
+  })
+
+  it('should display all bookings for the manager when given an array of rooms, a class name and an array of bookings', () => {
+    domUpdates.displayBookingsManager(bookings, 'bookings-today', rooms)
+
+    expect(domUpdates.displayBookingsManager).to.have.been.called.with(bookings, 'bookings-today', rooms)
+  })
+
+  it('should display the main manager page when given a user, an array of roomsand an array of bookings', () => {
+    domUpdates.displayManagerMainPage(user, bookings, rooms)
+
+    expect(domUpdates.displayManagerMainPage).to.have.been.called.with(user, bookings, rooms)
+  })
+
 
 
 })
