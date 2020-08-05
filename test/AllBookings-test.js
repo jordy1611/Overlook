@@ -7,10 +7,10 @@ import AllBookings from '../src/AllBookings'
 import Booking from '../src/Booking'
 
 describe('AllBookings', () => {
-  let bookings, allBookings, user1Bookings, user2Bookings;
+  let bookings, hotelBookings, user1Bookings, user2Bookings;
   before(() => {
     bookings = constSampleBookingData.map(booking => new Booking(booking))
-    allBookings = new AllBookings(bookings)
+    hotelBookings = new AllBookings(bookings)
     user1Bookings = [{
         id: '5fwrgu4i7k55hl6sz',
         userID: 1,
@@ -86,15 +86,15 @@ describe('AllBookings', () => {
   });
 
   it('should have an array of all booking objects. Past, present and future', () => {
-    expect(allBookings.bookings.length).to.eql(28);
-    expect(allBookings.bookings[0]).to.eql({
+    expect(hotelBookings.bookings.length).to.eql(28);
+    expect(hotelBookings.bookings[0]).to.eql({
       id: '5fwrgu4i7k55hl6sz',
       userID: 1,
       date: '2020/07/22',
       roomNumber: 15,
       roomServiceCharges: []
     });
-    expect(allBookings.bookings[10]).to.eql({
+    expect(hotelBookings.bookings[10]).to.eql({
       id: '5fwrgu4i7k55hl6te',
       userID: 2,
       date: '2020/01/19',
@@ -104,12 +104,12 @@ describe('AllBookings', () => {
   });
 
   it('should return a filtered array of bookings based on a userID', () => {
-    expect(allBookings.getBookingsByUser(1)).to.eql(user1Bookings)
-    expect(allBookings.getBookingsByUser(10)).to.eql(user2Bookings)
+    expect(hotelBookings.getBookingsByUser(1)).to.eql(user1Bookings)
+    expect(hotelBookings.getBookingsByUser(10)).to.eql(user2Bookings)
   });
 
   it('should return a filtered array of bookings based on a date', () => {
-    expect(allBookings.getBookingsByDate('2020/02/03')).to.eql(
+    expect(hotelBookings.getBookingsByDate('2020/02/03')).to.eql(
       [{
         id: '5fwrgu4i7k55hl6tg',
         userID: 3,
@@ -125,7 +125,7 @@ describe('AllBookings', () => {
         roomServiceCharges: []
       }]
     )
-    expect(allBookings.getBookingsByDate('2020/11/16')).to.eql(
+    expect(hotelBookings.getBookingsByDate('2020/11/16')).to.eql(
       [{
         id: '5fwrgu4i7k55hl6tt',
         userID: 3,

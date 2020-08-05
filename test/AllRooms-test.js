@@ -3,9 +3,6 @@ import constSampleBookingData from './sampleData/constSampleBookings'
 import letSampleBookingData from './sampleData/letSampleBookings'
 import sampleRoomData from './sampleData/sampleRooms'
 import sampleUserData from './sampleData/sampleUsers'
-
-// import BookingRepo from '../src/Booking-repo'
-// import Repo from '../src/Repo'
 import AllRooms from '../src/AllRooms'
 
 describe('AllRooms', () => {

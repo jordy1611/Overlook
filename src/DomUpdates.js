@@ -60,7 +60,7 @@ let domUpdates = {
     this.hideElement('customer-search-dashboard')
   },
 
-  //// customer search
+  //// customer search display
 
   displayBookRoomPage() {
     this.hideElement('customer-dashboard')
@@ -95,7 +95,7 @@ let domUpdates = {
       console.log(this.searchDate)
     const allRooms = user.getAvailableRoomsByDate(this.searchDate, hotelRooms, hotelBookings)
     const filteredRooms = allRooms.filter(room => room.roomType === roomType)
-    domUpdates.displayRooms('available-rooms', filteredRooms)
+    this.displayRooms('available-rooms', filteredRooms)
   },
 
   //// main manager display
@@ -129,7 +129,7 @@ let domUpdates = {
     this.displayBookingsManager(bookingsToday, 'bookings-today', hotelRooms)
   },
 
-  //// manager search dashboard
+  //// manager search display
 
   displayManagerSearchPage(dateBookings, customer, totalSpent, hotelRooms) {
     this.displayBookingsManager(dateBookings, 'manager-user-bookings', hotelRooms)
