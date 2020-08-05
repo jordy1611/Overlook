@@ -245,7 +245,6 @@ function getSearchedCustomer() {
   return searchCustomer || undefined
 }
 
-// if (bookingToDelete !== null && bookingToDelete.date >= todayDate)
 function bookRoom(event, searchDate) {
   if(searchDate >= todayDate) {
     const roomNumber = event.target.closest('.room').dataset.id
