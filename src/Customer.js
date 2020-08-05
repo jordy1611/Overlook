@@ -4,7 +4,6 @@ class Customer extends User{
   constructor({id, name}) {
     super(id, name);
   }
-
 }
 
 

@@ -103,7 +103,7 @@ let domUpdates = {
   displayTodayStats(user, bookingsToday, hotelRooms) {
     const totalToday = user.getBookingsCost(bookingsToday, hotelRooms)
     document.querySelector('.revenue-today').innerText = totalToday.toFixed(2)
-    document.querySelector('.rooms-booked').innerText = (bookingsToday.length / hotelRooms.allRooms.length).toFixed(2);
+    document.querySelector('.rooms-booked').innerText = (bookingsToday.length * 100 / hotelRooms.allRooms.length).toFixed(0);
   },
 
   displayBookingsManager(bookings, className, hotelRooms) {
