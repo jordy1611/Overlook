@@ -33,6 +33,9 @@ describe.only('DOM Updates', () => {
     chai.spy.on(domUpdates, "displayBookRoomPage", () => {})
     chai.spy.on(domUpdates, "hideCustomerSearchPage", () => {})
     chai.spy.on(domUpdates, "displayCustomerSearch", () => {})
+    chai.spy.on(domUpdates, "filterRoomsByType", () => {})
+    chai.spy.on(domUpdates, "displayTodayStats", () => {})
+    chai.spy.on(domUpdates, "isplayBookingsManager", () => {})
     chai.spy.on(domUpdates, "displayManagerMainPage", () => {})
     chai.spy.on(domUpdates, "displayManagerSearchPage", () => {})
     chai.spy.on(domUpdates, "displayManagerRoomSearch", () => {})
@@ -85,9 +88,15 @@ describe.only('DOM Updates', () => {
   })
 
   it('should display a customer\'s search when given a user, array of rooms and an array of bookings', () => {
-    displayCustomerSearch(user, rooms, bookings)
+    domUpdates.displayCustomerSearch(user, rooms, bookings)
 
     expect(domUpdates.displayCustomerSearch).to.have.been.called.with(user, rooms, bookings)
+  })
+
+  it('should filter and display rooms by type when given a room type, user, array of rooms and an array of bookings', () => {
+    domUpdates.filterRoomsByType('suite', user, rooms, bookings)
+
+    expect(domUpdates.filterRoomsByType).to.have.been.called.with('suite', user, rooms, bookings)
   })
 
 
