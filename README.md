@@ -21,8 +21,43 @@ https://github.com/jordy1611/Overlook
 `cd` into directory and run `npm install` for dependencies
 
 ## Usage
+### Customer
+* Customer can log in with Customer id and password
+![gif of customer logging in](src/images/CustomerLogin.gif)
 
+* Customer can see their total spent at the hotel and all of their bookings
+![screenshot of customer dashboard](src/images/CustomerDashboard.png)
 
+* Customer can search for rooms and filter rooms by date
+![gif of customer searching rooms](src/images/CustomerSearch1.gif)
+
+* Customer can further filter rooms by room type
+![gif of customer filtering rooms](src/images/CustomerFilter.gif)
+
+* Customer can book a room
+![gif of customer booking room](src/images/CustomerBook.gif)
+
+* Customer can return to their main dashboard
+![gif of customer returning](src/images/CustomerReturn.gif)
+
+### Manager
+* Manager can log in with manager id and password
+![gif of manager logging in](src/images/ManagerLogin.gif)
+
+* Manager can view today's revenue, % of rooms booked and all bookings today
+![screenshot of manager dashboard](src/images/ManagerDashboard.png)
+
+* Manager can search customer by name
+![gif of manager searching customer](src/images/ManagerSearch1.gif)
+
+* Manager can search rooms for customer by date
+![gif of manager searching rooms by date](src/images/ManagerSearchDate.gif)
+
+* Manager can book a room for a customer
+![gif of manager booking room](src/images/ManagerBooking.gif)
+
+* Manager can return to the main manager page
+![gif of manager returning](src/images/ManagerReturn.gif)
 ## Roadmap
 
 See the [open issues](https://github.com/jordy1611/Overlook/issues) for a list of proposed features (and known issues).
