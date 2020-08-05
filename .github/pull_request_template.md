@@ -7,7 +7,7 @@
 ### Any background context you want to provide?
 *
 ### What are the relevant tickets?
-* (Resolves #)
+* Resolves #
 ### Screenshots (if appropriate)
 *
 ### Questions:

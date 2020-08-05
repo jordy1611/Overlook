@@ -1,5 +1,5 @@
 class User {
-  constructor(id = null, name = null) {
+  constructor(id = 0, name = 'no name') {
     this.id = id
     this.name = name
   }
@@ -8,13 +8,6 @@ class User {
     return this.name.split(' ')[0]
   }
 
-  getBookingsCost(bookings, rooms) {
-    let bookingsCost = 0;
-    bookings.forEach(booking => {
-      bookingsCost += booking.getCost(rooms.allRooms)
-    })
-    return bookingsCost;
-  }
   getAvailableRoomsByDate(date, hotelRooms, hotelBookings) {  //not being tested
     let dayBookings = hotelBookings.getBookingsByDate(date)
     let availableRooms = hotelRooms.allRooms.map(room => room)
@@ -24,6 +17,14 @@ class User {
       })
     })
     return availableRooms
+  }
+
+  getBookingsCost(bookings, rooms) {
+    let bookingsCost = 0;
+    bookings.forEach(booking => {
+      bookingsCost += booking.getCost(rooms.allRooms)
+    })
+    return bookingsCost;
   }
 }
 
