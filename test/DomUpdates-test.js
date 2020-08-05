@@ -4,13 +4,7 @@ import constSampleBookingData from './sampleData/constSampleBookings'
 import sampleRoomData from './sampleData/sampleRooms'
 import sampleUserData from './sampleData/sampleUsers'
 import domUpdates from '../src/domUpdates'
-// import AllBookings from '../src/allBookings'
-// import Booking from '../src/Booking'
-// import AllRooms from '../src/AllRooms'
-// import AllCustomers from '../src/AllCustomers'
-// import Customer from '../src/Customer'
-// import User from '../src/User'
-// import Manager from '../src/Manager'
+
 const spies = require('chai-spies');
 chai.use(spies);
 
