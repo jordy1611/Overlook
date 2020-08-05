@@ -254,6 +254,7 @@ function bookRoom(event, className) {
   }
   hotelData.bookings.bookings.unshift(new Booking(booking))
   postNewBooking(booking)
+  alert('Congratulations! Room Booked!')
 }
 
 function removeBooking(event) {
